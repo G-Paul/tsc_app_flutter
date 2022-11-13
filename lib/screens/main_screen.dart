@@ -1,10 +1,17 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import './admin/home/admin_home.dart';
 import './admin/students/admin_students.dart';
 import './admin/teachers/admin_teachers.dart';
 import './website/website_screen.dart';
+// import 'login/login_button.dart';
+import 'login/hero_digital_route.dart';
+import './login/login_card.dart';
+import './login/signed_in_card.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -52,13 +59,23 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ),
         actions: [
-          IconButton(
-            icon: Icon(
-              Icons.account_circle_outlined,
-              color: Theme.of(context).appBarTheme.foregroundColor,
-            ),
-            onPressed: () {},
-          ),
+          // Material(
+          //   child: Hero(
+          //     tag: login_user,
+          //     child: IconButton(
+          //         icon: Icon(
+          //           Icons.account_circle_outlined,
+          //           color: Theme.of(context).appBarTheme.foregroundColor,
+          //         ),
+          //         onPressed: () {
+          //           Navigator.of(context)
+          //               .push(HeroDialogRoute(builder: (context) {
+          //             return const LoginCard();
+          //           }));
+          //         }),
+          //   ),
+          // ),
+          LoginButton(),
         ],
       ),
       bottomNavigationBar: Container(
@@ -93,6 +110,42 @@ class _MainScreenState extends State<MainScreen> {
       ),
       body: _pages[_selectedPage]['page'] as Widget?,
       backgroundColor: const Color(0xFFFDFDF5),
+    );
+  }
+}
+
+class LoginButton extends StatelessWidget {
+  const LoginButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.of(context).push(HeroDialogRoute(builder: (context) {
+            return StreamBuilder<User?>(
+              stream: FirebaseAuth.instance.authStateChanges(),
+              builder: ((context, snapshot) {
+                if (snapshot.hasData)
+                  return SignedInCard();
+                else
+                  return LoginCard();
+              }),
+            );
+          }));
+        },
+        child: Hero(
+          tag: login_user,
+          // createRectTween: (begin, end) {
+          //   return CustomRectTween(begin: begin, end: end);
+          // },
+          child: Material(
+              child: Icon(
+            Icons.account_circle_outlined,
+          )),
+        ),
+      ),
     );
   }
 }

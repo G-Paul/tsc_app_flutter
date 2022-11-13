@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "263466741558",
+    "firebase_url": "https://tsc-web-361112-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "tsc-web-361112",
+    "storage_bucket": "tsc-web-361112.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:263466741558:android:cfce4858e0fd094dd04d97",
+        "android_client_info": {
+          "package_name": "com.talentsprintclasses.tsc_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "263466741558-dvfm7bk1l15s3v2lo6lk57j2n2e9roa9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRrfLedgDKLTwQIqtg67kbZRAqP6k-X50"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "263466741558-dvfm7bk1l15s3v2lo6lk57j2n2e9roa9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

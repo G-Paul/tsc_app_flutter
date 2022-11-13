@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import './screens/home/home_screen.dart';
 import './screens//main_screen.dart';
+import './screens/login/login_button.dart';
 
-void main() {
+// void main() {
+//   runApp(MyApp());
+// }
+
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   runApp(MyApp());
 }
 
@@ -12,8 +21,9 @@ class MyApp extends StatelessWidget {
   MyApp({super.key});
 
   var theme_1 = ThemeData(
-    primaryColor: const Color.fromARGB(255, 147, 240, 65),
+    primaryColor: Color(0xFF93F041),
     backgroundColor: const Color(0xFFFDFDF5),
+    buttonColor: Color.fromARGB(255, 189, 255, 132),
     iconTheme: const IconThemeData(
       color: const Color.fromARGB(255, 46, 49, 42),
     ),
@@ -24,8 +34,9 @@ class MyApp extends StatelessWidget {
       foregroundColor: const Color(0xFF1A1C18),
     ),
     buttonTheme: const ButtonThemeData(
-      splashColor: Color.fromARGB(255, 188, 248, 59),
+      buttonColor: Color.fromARGB(255, 205, 244, 122),
     ),
+    textTheme: TextTheme(),
   );
   // This widget is the root of your application.
   @override
