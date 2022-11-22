@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 const String login_user = 'login_user';
 
@@ -57,32 +58,45 @@ class _LoginCardState extends State<LoginCard> {
                       ),
                       SizedBox(height: 20),
                       TextField(
+                        style: Theme.of(context).textTheme.bodySmall,
+
                         controller: emailController,
                         decoration: InputDecoration(
                           hintText: 'Email',
+                          hintStyle: Theme.of(context).textTheme.labelSmall,
                           border: InputBorder.none,
                         ),
                         // cursorColor: Colors.white,
                       ),
                       Divider(
-                        color: Theme.of(context).primaryColor.withOpacity(0.5),
-                        thickness: 0.2,
+                        color: Theme.of(context).dividerColor,
+                        thickness: 0.4,
                       ),
                       TextField(
+                        style: Theme.of(context).textTheme.bodySmall,
                         controller: pwController,
                         obscureText: true,
                         decoration: InputDecoration(
                           hintText: 'Password',
+                          hintStyle: Theme.of(context).textTheme.labelSmall,
                           border: InputBorder.none,
                         ),
                       ),
                       Divider(
-                        color: Theme.of(context).primaryColor.withOpacity(0.5),
-                        thickness: 0.2,
+                        color: Theme.of(context).dividerColor,
+                        thickness: 0.4,
                       ),
                       SizedBox(height: 20),
                       ElevatedButton(
                         onPressed: () => signIn(),
+                        style: ElevatedButton.styleFrom(
+                          textStyle: GoogleFonts.raleway(),
+                          backgroundColor: Theme.of(context).buttonColor,
+                          foregroundColor: Theme.of(context).focusColor,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                  20 * MediaQuery.of(context).textScaleFactor)),
+                        ),
                         child: Container(
                           // height: 40,
                           padding: EdgeInsets.symmetric(vertical: 10),
@@ -99,20 +113,12 @@ class _LoginCardState extends State<LoginCard> {
                                 SizedBox(
                                   width: 5,
                                 ),
-                                const Text('Sign In'),
+                                Text(
+                                  'Sign In',
+                                ),
                               ],
                             ),
                           ),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Theme.of(context).buttonColor,
-                          foregroundColor: Theme.of(context)
-                              .iconTheme
-                              .color!
-                              .withOpacity(0.7),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  20 * MediaQuery.of(context).textScaleFactor)),
                         ),
                       ),
                     ],

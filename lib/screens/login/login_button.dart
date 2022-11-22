@@ -11,6 +11,7 @@ class LoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Theme.of(context).appBarTheme.backgroundColor,
       padding: EdgeInsets.symmetric(horizontal: 10),
       child: GestureDetector(
         onTap: () {
@@ -29,6 +30,7 @@ class LoginButton extends StatelessWidget {
             child: Material(
                 child: Icon(
               Icons.account_circle_outlined,
+              color: Theme.of(context).primaryColor,
             )),
           ),
         ),

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:google_fonts/google_fonts.dart';
 import './login_card.dart';
 
 class SignedInCard extends StatelessWidget {
@@ -44,9 +45,18 @@ class SignedInCard extends StatelessWidget {
                             height: 90,
                           ),
                           SizedBox(height: 20),
-                          Text('Hello\n'),
-                          Text('${user.displayName}'),
-                          Text('${user.email}'),
+                          Text(
+                            'Hello\n',
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                          Text(
+                            '${user.displayName}',
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                          Text(
+                            '${user.email}',
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
                           SizedBox(
                             height: 20,
                           ),
@@ -68,16 +78,14 @@ class SignedInCard extends StatelessWidget {
                                   SizedBox(
                                     width: 5,
                                   ),
-                                  const Text('Sign Out'),
+                                  Text('Sign Out'),
                                 ],
                               ),
                             ),
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: Theme.of(context).buttonColor,
-                                foregroundColor: Theme.of(context)
-                                    .iconTheme
-                                    .color!
-                                    .withOpacity(0.7),
+                                foregroundColor: Theme.of(context).focusColor,
+                                textStyle: GoogleFonts.raleway(),
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20 *
                                         MediaQuery.of(context)

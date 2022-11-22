@@ -29,7 +29,10 @@ class AdminHomeScreen extends StatelessWidget {
                 label: Container(
                   width: MediaQuery.of(context).size.width / 4,
                   child: ConstrainedBox(
-                    child: Text(column),
+                    child: Text(
+                      column,
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
                     constraints: BoxConstraints(
                         maxWidth: MediaQuery.of(context).size.width / 4.0),
                   ),
@@ -43,7 +46,10 @@ class AdminHomeScreen extends StatelessWidget {
             child: ConstrainedBox(
               constraints: BoxConstraints(
                   maxWidth: MediaQuery.of(context).size.width / 4.0),
-              child: Text(data),
+              child: Text(
+                data,
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
             ),
           )))
       .toList();
@@ -62,6 +68,7 @@ class AdminHomeScreen extends StatelessWidget {
         DataRow(cells: getCells(context, time_table_data[5])),
         // DataRow(cells: getCells(context, time_table_data[3])),
       ],
+      
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -53,10 +54,9 @@ class _MainScreenState extends State<MainScreen> {
         title: Center(
           child: Text(
             "Talent Sprint Classes",
-            style: Theme.of(context)
-                .textTheme
-                .titleLarge!
-                .copyWith(color: Theme.of(context).appBarTheme.foregroundColor),
+            style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                color: Theme.of(context).appBarTheme.foregroundColor,
+                fontWeight: FontWeight.bold),
           ),
         ),
         actions: [
@@ -81,16 +81,21 @@ class _MainScreenState extends State<MainScreen> {
       ),
       drawer: NavigationDrawer(),
       bottomNavigationBar: Container(
-        color: Theme.of(context).bottomAppBarColor,
+        color: Theme.of(context).backgroundColor,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
           child: GNav(
             onTabChange: (value) => _selectPage(value),
             gap: 10,
-            backgroundColor: Theme.of(context).bottomAppBarColor,
-            color: Theme.of(context).iconTheme.color!.withOpacity(0.7),
-            activeColor: Theme.of(context).iconTheme.color!,
-            tabBackgroundColor: Theme.of(context).primaryColor.withOpacity(0.3),
+            backgroundColor: Theme.of(context).backgroundColor,
+            color: Theme.of(context).iconTheme.color!.withOpacity(0.9),
+            activeColor: Theme.of(context).focusColor,
+            tabBackgroundColor: Theme.of(context).buttonColor,
+            // tabBackgroundColor: Theme.of(context).bottomAppBarColor,
+            textStyle: GoogleFonts.raleway(
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).focusColor,
+            ),
             padding: EdgeInsets.all(10),
             tabs: [
               GButton(
@@ -111,7 +116,7 @@ class _MainScreenState extends State<MainScreen> {
         ),
       ),
       body: _pages[_selectedPage]['page'] as Widget?,
-      backgroundColor: const Color(0xFFFDFDF5),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
     );
   }
 }
@@ -122,6 +127,7 @@ class LoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      // color: Theme.of(context).appBarTheme.backgroundColor,
       padding: EdgeInsets.symmetric(horizontal: 10),
       child: GestureDetector(
         onTap: () {
@@ -143,9 +149,10 @@ class LoginButton extends StatelessWidget {
           //   return CustomRectTween(begin: begin, end: end);
           // },
           child: Material(
+              color: Theme.of(context).appBarTheme.backgroundColor,
               child: Icon(
-            Icons.account_circle_outlined,
-          )),
+                Icons.account_circle_outlined,
+              )),
         ),
       ),
     );
