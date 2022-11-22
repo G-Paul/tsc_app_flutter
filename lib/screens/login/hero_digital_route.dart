@@ -31,7 +31,7 @@ class HeroDialogRoute<T> extends PageRoute<T> {
   bool get maintainState => true;
 
   @override
-  Color get barrierColor => Colors.black54;
+  Color get barrierColor => Color.fromARGB(136, 0, 0, 0);
 
   @override
   Widget buildTransitions(BuildContext context, Animation<double> animation,

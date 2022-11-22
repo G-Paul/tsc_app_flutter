@@ -36,6 +36,14 @@ class SignedInCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+                          Container(
+                            child: Image.asset(
+                              'assets/images/talent_sprint_class_logo_transparent.png',
+                              fit: BoxFit.contain,
+                            ),
+                            height: 90,
+                          ),
+                          SizedBox(height: 20),
                           Text('Hello\n'),
                           Text('${user.displayName}'),
                           Text('${user.email}'),

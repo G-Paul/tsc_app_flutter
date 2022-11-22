@@ -12,6 +12,7 @@ import './website/website_screen.dart';
 import 'login/hero_digital_route.dart';
 import './login/login_card.dart';
 import './login/signed_in_card.dart';
+import './navigation_drawer.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -41,14 +42,14 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
-        leading: IconButton(
-          color: Theme.of(context).appBarTheme.foregroundColor,
-          icon: const Icon(
-            Icons.menu_outlined,
-            semanticLabel: "Menu Button",
-          ),
-          onPressed: () {},
-        ),
+        // leading: IconButton(
+        //   color: Theme.of(context).appBarTheme.foregroundColor,
+        //   icon: const Icon(
+        //     Icons.menu_outlined,
+        //     semanticLabel: "Menu Button",
+        //   ),
+        //   onPressed: () {},
+        // ),
         title: Center(
           child: Text(
             "Talent Sprint Classes",
@@ -78,6 +79,7 @@ class _MainScreenState extends State<MainScreen> {
           LoginButton(),
         ],
       ),
+      drawer: NavigationDrawer(),
       bottomNavigationBar: Container(
         color: Theme.of(context).bottomAppBarColor,
         child: Padding(

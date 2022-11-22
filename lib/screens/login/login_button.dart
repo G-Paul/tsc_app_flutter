@@ -18,18 +18,21 @@ class LoginButton extends StatelessWidget {
             return const LoginCard();
           }));
         },
-        child: Hero(
-          tag: login_user,
-          // createRectTween: (begin, end) {
-          //   return CustomRectTween(begin: begin, end: end);
-          // },
-          child: Material(
-              child: Icon(
-            Icons.account_circle_outlined,
-          )),
+        child: Container(
+          height: Theme.of(context).appBarTheme.toolbarHeight,
+          width: Theme.of(context).appBarTheme.toolbarHeight,
+          child: Hero(
+            tag: login_user,
+            // createRectTween: (begin, end) {
+            //   return CustomRectTween(begin: begin, end: end);
+            // },
+            child: Material(
+                child: Icon(
+              Icons.account_circle_outlined,
+            )),
+          ),
         ),
       ),
     );
   }
 }
-
