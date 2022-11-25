@@ -14,9 +14,13 @@ class WebsiteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: ElevatedButton(
-        child: Text("Go to Website"),
-        onPressed: () => launch_Url(),
+      child: GestureDetector(
+        onTap: launch_Url,
+        child: Image.asset(
+          "assets/images/talent_sprint_class_logo_transparent.png",
+          width: 300,
+          height: 300,
+        ),
       ),
     );
   }
