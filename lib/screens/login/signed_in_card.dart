@@ -62,7 +62,19 @@ class SignedInCard extends StatelessWidget {
                           ),
                           ElevatedButton(
                             onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  builder: ((context) {
+                                    return Center(
+                                      child: CircularProgressIndicator(
+                                        color: Theme.of(context).primaryColor,
+                                        semanticsLabel: "Logging in",
+                                      ),
+                                    );
+                                  }));
                               FirebaseAuth.instance.signOut();
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pop();
                             },
                             child: Container(
                               padding: EdgeInsets.symmetric(vertical: 10),

@@ -42,9 +42,23 @@ class LightThemes {
         ),
       ),
       titleLarge: GoogleFonts.raleway(),
+      displayLarge: GoogleFonts.raleway(
+        textStyle: TextStyle(
+          color: Color(0xFF00BF6D),
+          fontSize: 30,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+      displaySmall: GoogleFonts.mukta(
+          textStyle: TextStyle(
+        color: Color.fromARGB(255, 102, 102, 102),
+        fontSize: 20,
+        // height: 28,
+        fontWeight: FontWeight.normal,
+      )),
       // button: GoogleFonts.raleway(
-      //   fontWeight: FontWeight.bold,
-      // ),
+      //     // fontWeight: FontWeight.bold,
+      //     ),
     ),
   );
 }
@@ -90,6 +104,21 @@ class DarkThemes {
         ),
       ),
       titleLarge: GoogleFonts.raleway(),
+      displayLarge: GoogleFonts.raleway(
+        textStyle: TextStyle(
+          color: Color(0xFF00BF6D),
+          fontSize: 30,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+      displaySmall: GoogleFonts.mukta(
+        textStyle: TextStyle(
+          color: Color.fromARGB(201, 255, 254, 254),
+          fontSize: 20,
+          // height: 28,
+          fontWeight: FontWeight.normal,
+        ),
+      ),
       // button: GoogleFonts.raleway(
       //   fontWeight: FontWeight.bold,
       // ),
