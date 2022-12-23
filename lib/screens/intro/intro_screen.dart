@@ -29,11 +29,12 @@ class IntroScreen extends StatefulWidget {
 }
 
 class _IntroScreenState extends State<IntroScreen> {
-  final pageController = PageController(initialPage: 0);
   int pageIndex = 0;
+  final pageController = PageController(initialPage: 0);
+
   // @override
   // void initState() {
-  //   pageController.ini
+  //
   // }
   void _moveToLastPage() {
     setState(() {
@@ -188,7 +189,7 @@ class _IntroScreenState extends State<IntroScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    "Skip",
+                    "Skip to Login",
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
                         color: Theme.of(context).primaryColor, fontSize: 15),
                   ),

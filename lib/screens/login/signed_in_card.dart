@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import './login_card.dart';
 
 class SignedInCard extends StatelessWidget {
@@ -13,6 +14,7 @@ class SignedInCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final prefs = SharedPreferences.getInstance();
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32.0),
@@ -74,7 +76,8 @@ class SignedInCard extends StatelessWidget {
                                   }));
                               FirebaseAuth.instance.signOut();
                               Navigator.of(context).pop();
-                              Navigator.of(context).pop();
+                              Navigator.of(context)
+                                  .pushReplacementNamed('/IntroScreen');
                             },
                             child: Container(
                               padding: EdgeInsets.symmetric(vertical: 10),
