@@ -1,6 +1,7 @@
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
+import '/models/db/database.dart';
 
 class NavigationDrawer extends StatelessWidget {
   const NavigationDrawer({super.key});
@@ -19,6 +20,12 @@ class NavigationDrawer extends StatelessWidget {
               onPressed: (() {}),
               child: Text("Dark Mode"),
             ),
+            OutlinedButton(
+                onPressed: () {
+                  UserAuth().logout();
+                  Navigator.pushReplacementNamed(context, '/IntroScreen');
+                },
+                child: Text("Sign Out")),
           ],
         ),
       ),

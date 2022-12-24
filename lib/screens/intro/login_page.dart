@@ -49,9 +49,17 @@ class _LoginPageState extends State<LoginPage> {
             // Navigator.of(context).pop();
             prefs.setString('userType', userTypeList[userType]);
             prefs.setBool('isLoggedIn', true);
-            Navigator.of(context).pushReplacementNamed('/MainScreen');
+            switch (userTypeList[userType]) {
+              case 'student':
+                Navigator.of(context)
+                    .pushReplacementNamed('/StudentMainScreen');
+                break;
+              default:
+                Navigator.of(context).pushReplacementNamed('/MainScreen');
+            }
           } else {
             UserAuth().logout();
+            prefs.setBool('isLoggedIn', false);
             Navigator.of(context).pop();
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text('Please select correct user type!'),

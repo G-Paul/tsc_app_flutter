@@ -4,7 +4,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import './screens/home/home_screen.dart';
+import '/screens/student/student_main.dart';
 import './screens//main_screen.dart';
 import './screens/intro/login_page.dart';
 import './app_themes.dart';
@@ -19,13 +19,16 @@ Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  runApp(MyApp(prefs));
+  final isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+  final userType = prefs.getString('userType')??'';
+  runApp(MyApp(isLoggedIn: isLoggedIn, userType: userType));
   // SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
 }
 
 class MyApp extends StatelessWidget {
-  SharedPreferences prefs;
-  MyApp(this.prefs, {super.key});
+  final bool isLoggedIn;
+  final String userType;
+  MyApp({required this.isLoggedIn, required this.userType, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +42,22 @@ class MyApp extends StatelessWidget {
       routes: {
         '/MainScreen': (context) => MainScreen(),
         '/IntroScreen': (context) => IntroScreen(),
+        '/StudentMainScreen': (context) => StudentMainScreen(),
       },
-      home: (userAuth.isLoggedIn()) ? MainScreen() : IntroScreen(),
+      home: (userAuth.isLoggedIn()) ? GetScreen(userType): IntroScreen(),
     );
+  }
+}
+
+Widget GetScreen(String userType) {
+  switch (userType) {
+    case 'admin':
+      return MainScreen();
+    case 'student':
+      return StudentMainScreen();
+    case 'teacher':
+      return MainScreen();
+    default:
+      return IntroScreen();
   }
 }

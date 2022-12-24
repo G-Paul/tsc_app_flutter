@@ -8,6 +8,7 @@ import 'package:path_provider/path_provider.dart';
 final db = FirebaseFirestore.instance;
 final auth = FirebaseAuth.instance;
 final storage = FirebaseStorage.instance;
+final user = FirebaseAuth.instance.currentUser!;
 
 class UserAuth {
   Future<User?> signup(
@@ -108,12 +109,13 @@ class UseStorage {
   }
 
   Future<String> downloadFile(String filePath, String fileName) async {
-    final fileURL = await storage.ref(filePath).child(fileName).getDownloadURL();
+    final fileURL =
+        await storage.ref(filePath).child(fileName).getDownloadURL();
     final Directory appDocDir = await getApplicationDocumentsDirectory();
     File downloadToFile = File('${appDocDir.path}/$fileName');
     await FirebaseStorage.instance
         .refFromURL(fileURL)
         .writeToFile(downloadToFile);
     return downloadToFile.path;
-    }
+  }
 }
