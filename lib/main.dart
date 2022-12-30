@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter/services.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -9,6 +10,7 @@ import './screens//main_screen.dart';
 import './screens/intro/login_page.dart';
 import './app_themes.dart';
 import './screens/intro/intro_screen.dart';
+import 'screens/student/models/student_performance.dart';
 import './models/db/database.dart';
 
 // void main() {
@@ -20,7 +22,7 @@ Future main() async {
   await Firebase.initializeApp();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   final isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
-  final userType = prefs.getString('userType')??'';
+  final userType = prefs.getString('userType') ?? '';
   runApp(MyApp(isLoggedIn: isLoggedIn, userType: userType));
   // SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
 }
@@ -37,14 +39,15 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'TSC_Mobile',
       theme: LightThemes.light_theme_1,
-      darkTheme: DarkThemes.dark_theme_2,
+      darkTheme: DarkThemes.dark_theme_1,
       themeMode: ThemeMode.system,
       routes: {
         '/MainScreen': (context) => MainScreen(),
         '/IntroScreen': (context) => IntroScreen(),
         '/StudentMainScreen': (context) => StudentMainScreen(),
+        // '/studentPerformance': (context) => StudentPerformace(),
       },
-      home: (userAuth.isLoggedIn()) ? GetScreen(userType): IntroScreen(),
+      home: (userAuth.isLoggedIn()) ? GetScreen(userType) : IntroScreen(),
     );
   }
 }

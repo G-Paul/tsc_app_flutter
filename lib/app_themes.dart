@@ -1,22 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LightThemes {
   static ThemeData light_theme_1 = ThemeData(
     primaryColor: Color(0xFF00BF6D),
-    backgroundColor: const Color(0xFFFDFDF5),
-    scaffoldBackgroundColor: const Color(0xFFFDFDF5),
+    // backgroundColor: const Color(0xFFFDFDF5),
+    backgroundColor: Colors.white,
+    scaffoldBackgroundColor: Color(0xFFF7F7EE),
     buttonColor: Color(0xFF00BF6D),
     iconTheme: const IconThemeData(
       color: const Color.fromARGB(255, 46, 49, 42),
     ),
     dividerColor: Color(0x3400BF6C),
-    focusColor: const Color(0xFFFDFDF5),
+    focusColor: Colors.orange[800],
     bottomAppBarColor: const Color(0xFFFDFDF5),
     appBarTheme: const AppBarTheme(
-      backgroundColor: const Color(0xFFFDFDF5),
+      backgroundColor: Color(0xFFF7F7EE),
       elevation: 0,
       foregroundColor: const Color(0xFF1A1C18),
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarColor: Color(0xFFF7F7EE),
+        statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness: Brightness.light,
+      ),
     ),
     buttonTheme: const ButtonThemeData(
       buttonColor: Color(0xFF00BF6D),
@@ -64,20 +71,25 @@ class LightThemes {
 }
 
 class DarkThemes {
-  static ThemeData dark_theme_2 = ThemeData(
+  static ThemeData dark_theme_1 = ThemeData(
     primaryColor: Color(0xFF00BF6D),
-    backgroundColor: Color(0xFF100F25),
+    backgroundColor: Color(0xFF151331),
     scaffoldBackgroundColor: Color(0xFF100F25),
     buttonColor: Color(0xFF00BF6D),
-    focusColor: const Color(0xFFFDFDF5),
+    focusColor: Colors.orange[400],
     iconTheme: const IconThemeData(
       color: Color(0xFF00BF6D),
     ),
     bottomAppBarColor: const Color(0xFFEDF2E2),
     appBarTheme: const AppBarTheme(
-      backgroundColor: Color(0xFF151331),
+      backgroundColor: Color(0xFF100F25),
       elevation: 0,
       foregroundColor: Color(0xFF00BF6D),
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarColor: Color(0xFF100F25),
+        statusBarIconBrightness: Brightness.light,
+        statusBarBrightness: Brightness.dark,
+      ),
     ),
     buttonTheme: ButtonThemeData(
       buttonColor: Color(0xFF00BF6D),
@@ -89,6 +101,7 @@ class DarkThemes {
           fontSize: 15,
         ),
       ),
+
       titleSmall: GoogleFonts.raleway(
         textStyle: TextStyle(
           color: Color(0xFF00BF6D),
@@ -103,7 +116,9 @@ class DarkThemes {
           fontSize: 13,
         ),
       ),
-      titleLarge: GoogleFonts.raleway(),
+      titleLarge: GoogleFonts.raleway(
+        color: Colors.white,
+      ),
       displayLarge: GoogleFonts.raleway(
         textStyle: TextStyle(
           color: Color(0xFF00BF6D),

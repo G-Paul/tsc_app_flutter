@@ -54,20 +54,20 @@ class _StudentMainScreenState extends State<StudentMainScreen> {
       ),
       drawer: NavigationDrawer(),
       bottomNavigationBar: Container(
-        color: Theme.of(context).backgroundColor,
+        color: Theme.of(context).scaffoldBackgroundColor,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
           child: GNav(
             onTabChange: (value) => _selectPage(value),
             gap: 10,
-            backgroundColor: Theme.of(context).backgroundColor,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             color: Theme.of(context).iconTheme.color!.withOpacity(0.9),
-            activeColor: Theme.of(context).focusColor,
+            activeColor: Colors.white,
             tabBackgroundColor: Theme.of(context).buttonColor,
             // tabBackgroundColor: Theme.of(context).bottomAppBarColor,
             textStyle: GoogleFonts.raleway(
               fontWeight: FontWeight.bold,
-              color: Theme.of(context).focusColor,
+              color: Colors.white,
             ),
             padding: EdgeInsets.all(10),
             tabs: [

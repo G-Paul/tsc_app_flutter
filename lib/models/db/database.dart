@@ -60,7 +60,7 @@ class GetCollection {
       collectionRef = collectionRef.where(query.toList());
     }
   }
-  Future<List<Object>> getDocuments() async {
+  Future<List<Map<String, dynamic>>> getDocuments() async {
     return await collectionRef.get().then((QuerySnapshot querySnapshot) {
       var results = {};
       querySnapshot.docs.forEach((doc) {

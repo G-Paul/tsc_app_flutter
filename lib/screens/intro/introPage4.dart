@@ -88,7 +88,9 @@ class IntroPage4 extends StatelessWidget {
                 child: Row(
                   children: [
                     Expanded(child: Divider()),
-                    SizedBox(width: 5,),
+                    SizedBox(
+                      width: 5,
+                    ),
                     Text(
                       "OR",
                       style: Theme.of(context)
@@ -96,7 +98,9 @@ class IntroPage4 extends StatelessWidget {
                           .titleSmall
                           ?.copyWith(color: Theme.of(context).dividerColor),
                     ),
-                    SizedBox(width: 5,),
+                    SizedBox(
+                      width: 5,
+                    ),
                     Expanded(child: Divider()),
                   ],
                 ),
