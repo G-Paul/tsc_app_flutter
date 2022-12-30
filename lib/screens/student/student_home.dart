@@ -92,11 +92,7 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                 leadingIcon: Icons.calendar_month,
                 title: "Time Table",
                 context: context,
-                onTap: () {
-                  setState(() {
-                    _expandTimeTable = !_expandTimeTable;
-                  });
-                },
+                onTap: null,
                 onTapTrailing: () {
                   setState(() {
                     _expandTimeTable = !_expandTimeTable;
@@ -116,11 +112,7 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                 leadingIcon: Icons.auto_graph_outlined,
                 title: "Performance",
                 context: context,
-                onTap: () {
-                  setState(() {
-                    _expandPerfTable = !_expandPerfTable;
-                  });
-                },
+                onTap: null,
                 onTapTrailing: () {
                   setState(() {
                     _expandPerfTable = !_expandPerfTable;
