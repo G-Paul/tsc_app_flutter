@@ -124,24 +124,27 @@ Widget buildSmallDataTable(
                   style: Theme.of(context).textTheme.bodySmall!.copyWith(
                       fontSize: 15,
                       color: Theme.of(context)
-                          .appBarTheme
-                          .foregroundColor!
+                          .textTheme
+                          .bodySmall!
+                          .color!
                           .withOpacity(0.7))),
               SizedBox(width: 20),
               Text("P2: $p2",
                   style: Theme.of(context).textTheme.bodySmall!.copyWith(
                       fontSize: 15,
                       color: Theme.of(context)
-                          .appBarTheme
-                          .foregroundColor!
+                          .textTheme
+                          .bodySmall!
+                          .color!
                           .withOpacity(0.7))),
               SizedBox(width: 20),
               Text("P3: $p3",
                   style: Theme.of(context).textTheme.bodySmall!.copyWith(
                       fontSize: 15,
                       color: Theme.of(context)
-                          .appBarTheme
-                          .foregroundColor!
+                          .textTheme
+                          .bodySmall!
+                          .color!
                           .withOpacity(0.7))),
               SizedBox(
                 width: 20,
@@ -150,8 +153,9 @@ Widget buildSmallDataTable(
                   style: Theme.of(context).textTheme.bodySmall!.copyWith(
                       fontSize: 15,
                       color: Theme.of(context)
-                          .appBarTheme
-                          .foregroundColor!
+                          .textTheme
+                          .bodySmall!
+                          .color!
                           .withOpacity(0.7)))
               // Text("lskjf"),
               // Text("lskjf"),
