@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import '/models/db/database.dart';
 import '/models/widgets/customListTile.dart';
 import './models/student_time_table.dart';
+import './models/student_test.dart';
 // import './models/student_performance_table.dart';
 import 'models/student_performance.dart';
 
@@ -44,19 +45,22 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
     });
     // print(userSubjects.toString());
     List<Map<String, dynamic>> tests = [];
-    // await GetCollection('tests', [
-    //   ['course', '==', userCourse],
-    //   ['class', '==', userClass]
-    // ]).getDocuments().then((docs) {
-    //   docs.forEach((element) {
-    //     if (DateTime.parse(element['date'].toString())
-    //         .isAfter(DateTime.now())) {
-    //       tests.add(element);
-    //     }
-    //   });
-    // });
-    // print(tests.toString());
-
+    final testColl = db.collection('tests');
+    final testQuery = await testColl
+        .where('class', isEqualTo: int.parse(userClass))
+        .where('course', isEqualTo: userCourse)
+        .get()
+        .then(
+      (value) {
+        return value.docs;
+      },
+    );
+    for (var element in testQuery) {
+      final testDoc = await UseDocument('tests', element.id).getDocument();
+      if (!(DateTime.parse(testDoc['date']).isBefore(DateTime.now()))) {
+        tests.add(testDoc);
+      }
+    }
     setState(() {
       schedule = sch;
       _userClass = userClass;
@@ -178,13 +182,15 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                     : Icon(Icons.expand_more,
                         color: Theme.of(context).focusColor),
                 context: context,
-                onTap: () {},
+                onTap: () {
+                  setState(() {
+                    _expandTestTable = !_expandTestTable;
+                  });
+                },
                 onTapTrailing: () {},
-                child: Text("No upcoming tests!!",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodySmall!
-                        .copyWith(color: Colors.white.withOpacity(0.7))),
+                child: (_expandTestTable)
+                    ? StudentUpcomingTests(tests: _tests)
+                    : testText(_tests.length, context),
               ),
             ],
           ),
@@ -192,4 +198,30 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
       ),
     );
   }
+}
+
+Widget testText(int testLen, BuildContext context) {
+  return (testLen <= 0)
+      ? Text("No upcoming tests. YAY!!! ",
+          style: Theme.of(context).textTheme.bodySmall!.copyWith(
+              color: Theme.of(context)
+                  .textTheme
+                  .bodySmall!
+                  .color!
+                  .withOpacity(0.7)))
+      : (testLen == 1)
+          ? Text(
+              "1 UPCOMING TEST !!!",
+              style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                    color: Theme.of(context).focusColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+            )
+          : Text(
+              "$testLen UPCOMING TESTS !!!",
+              style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                    color: Theme.of(context).focusColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+            );
 }

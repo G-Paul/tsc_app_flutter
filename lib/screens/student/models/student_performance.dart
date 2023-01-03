@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
+import 'package:tsc_app/models/widgets/customDataTable.dart';
+
 class StudentPerformace extends StatefulWidget {
   final Map<String, dynamic> subjects;
   const StudentPerformace({
@@ -35,7 +37,11 @@ class _StudentPerformaceState extends State<StudentPerformace> {
     {"value": 'hist', "text": 'History'},
     {"value": 'geo', "text": 'Geography'}
   ];
+
+  final columns = ["Topic", "Date", "Marks"];
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+
   List<DropdownMenuItem<String>> get _subjectItems {
     return _presentSubjectList.map((item) {
       return DropdownMenuItem<String>(
@@ -75,9 +81,18 @@ class _StudentPerformaceState extends State<StudentPerformace> {
     });
   }
 
-  @override
-  void initState() {
-    super.initState();
+  List<List<String>> tableData(List<Map<String, dynamic>> selectedData) {
+    List<List<String>> tableData = [];
+    selectedData.forEach(((element) {
+      if (element['marked']) {
+        tableData.add([
+          element['topic'],
+          element['date'],
+          "${element['mark']} / ${element['fm']}"
+        ]);
+      }
+    }));
+    return tableData;
   }
 
   @override
@@ -142,30 +157,23 @@ class _StudentPerformaceState extends State<StudentPerformace> {
               },
             ),
           ),
-          // SizedBox(
-          //   height: 40,
-          //   child: Padding(
-          //     padding: EdgeInsets.all(10),
-          //     child: Center(
-          //       child: Text(
-          //         "Result",
-          //         style: Theme.of(context).textTheme.titleLarge!.copyWith(
-          //               fontWeight: FontWeight.bold,
-          //             ),
-          //       ),
-          //     ),
-          //   ),
-          // ),
           (!_selectedData.isEmpty)
-              ? buildDataTable(context, _selectedData)
+              // ? buildDataTable(context, _selectedData)
+              ? CustomDataTable(
+                  columns: columns,
+                  tableData: tableData(_selectedData),
+                  scaleFactor: 3)
               : SizedBox(
                   height: 50,
-                  child: Text("Please select a subject",
-                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                            color: Theme.of(context).errorColor,
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ))),
+                  child: Text(
+                    "Please select a subject",
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                          color: Theme.of(context).errorColor,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                ),
         ],
       ),
     );
@@ -179,133 +187,133 @@ String? validateList(String? value) {
   return null;
 }
 
-double getCellWidth(BuildContext context) {
-  const double scaleFactor = 3.0;
-  return MediaQuery.of(context).size.width / scaleFactor;
-}
+// double getCellWidth(BuildContext context) {
+//   const double scaleFactor = 3.0;
+//   return MediaQuery.of(context).size.width / scaleFactor;
+// }
 
-List<DataColumn> getColumns(BuildContext context, List<String> columns) =>
-    columns
-        .map((String column) => DataColumn(
-              label: Container(
-                width: getCellWidth(context),
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    maxWidth: getCellWidth(context),
-                  ),
-                  child: Center(
-                    child: Text(
-                      column,
-                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                            fontSize: 17,
-                            fontWeight: FontWeight.w600,
-                            color: Theme.of(context).focusColor,
-                            // decoration: TextDecoration.underline,
-                            // decorationStyle: TextDecorationStyle.dotted
-                          ),
-                    ),
-                  ),
-                ),
-              ),
-            ))
-        .toList();
+// List<DataColumn> getColumns(BuildContext context, List<String> columns) =>
+//     columns
+//         .map((String column) => DataColumn(
+//               label: Container(
+//                 width: getCellWidth(context),
+//                 child: ConstrainedBox(
+//                   constraints: BoxConstraints(
+//                     maxWidth: getCellWidth(context),
+//                   ),
+//                   child: Center(
+//                     child: Text(
+//                       column,
+//                       style: Theme.of(context).textTheme.titleSmall!.copyWith(
+//                             fontSize: 17,
+//                             fontWeight: FontWeight.w600,
+//                             color: Theme.of(context).focusColor,
+//                             // decoration: TextDecoration.underline,
+//                             // decorationStyle: TextDecorationStyle.dotted
+//                           ),
+//                     ),
+//                   ),
+//                 ),
+//               ),
+//             ))
+//         .toList();
 
-List<DataCell> getRowCells(BuildContext context, List<String> cells) => cells
-    .map((data) => DataCell(Container(
-          // color: (data == "default") ? Colors.grey : Colors.brown,
-          height: 50,
-          width: getCellWidth(context),
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              maxWidth: getCellWidth(context),
-            ),
-            child: Center(
-              child: Text((data == "default") ? "--" : data,
-                  style: Theme.of(context).textTheme.bodySmall,
-                  textHeightBehavior: TextHeightBehavior(
-                    applyHeightToFirstAscent: false,
-                    applyHeightToLastDescent: false,
-                  )),
-            ),
-          ),
-        )))
-    .toList();
+// List<DataCell> getRowCells(BuildContext context, List<String> cells) => cells
+//     .map((data) => DataCell(Container(
+//           // color: (data == "default") ? Colors.grey : Colors.brown,
+//           height: 50,
+//           width: getCellWidth(context),
+//           child: ConstrainedBox(
+//             constraints: BoxConstraints(
+//               maxWidth: getCellWidth(context),
+//             ),
+//             child: Center(
+//               child: Text((data == "default") ? "--" : data,
+//                   style: Theme.of(context).textTheme.bodySmall,
+//                   textHeightBehavior: TextHeightBehavior(
+//                     applyHeightToFirstAscent: false,
+//                     applyHeightToLastDescent: false,
+//                   )),
+//             ),
+//           ),
+//         )))
+//     .toList();
 
-Widget buildDataTable(
-    BuildContext context, List<Map<String, dynamic>> selectedData) {
-  ScrollController scrollController = ScrollController();
-  List<String> columns = ["Topic", "Date", "Marks"];
-  List<List<String>> tableData = [];
-  selectedData.forEach(((element) {
-    if (element['marked']) {
-      tableData.add([
-        element['topic'],
-        element['date'],
-        "${element['mark']} / ${element['fm']}"
-      ]);
-    }
-  }));
+// Widget buildDataTable(
+//     BuildContext context, List<Map<String, dynamic>> selectedData) {
+//   ScrollController scrollController = ScrollController();
+//   List<String> columns = ["Topic", "Date", "Marks"];
+//   List<List<String>> tableData = [];
+//   selectedData.forEach(((element) {
+//     if (element['marked']) {
+//       tableData.add([
+//         element['topic'],
+//         element['date'],
+//         "${element['mark']} / ${element['fm']}"
+//       ]);
+//     }
+//   }));
 
-  List<DataRow> dataRowList = [];
-  for (var element in tableData) {
-    dataRowList.add(DataRow(cells: getRowCells(context, element)));
-  }
+//   List<DataRow> dataRowList = [];
+//   for (var element in tableData) {
+//     dataRowList.add(DataRow(cells: getRowCells(context, element)));
+//   }
 
-  return Container(
-    // margin: EdgeInsets.symmetric(vertical: 10, horizontal: 0),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // SizedBox(
-        //   height: 20,
-        //   child: Center(
-        //     child: Text(
-        //       "Time Table",
-        //       style: Theme.of(context).textTheme.titleLarge!.copyWith(
-        //           color: Theme.of(context).appBarTheme.foregroundColor,
-        //           fontWeight: FontWeight.bold),
-        //     ),
-        //   ),
-        // ),
-        // SizedBox(height: 10),
-        // Divider(
-        //   color: Theme.of(context).primaryColor.withOpacity(0.5),
-        //   thickness: 0,
-        //   indent: 40,
-        //   endIndent: 40,
-        // ),
-        Scrollbar(
-          controller: scrollController,
-          thumbVisibility: false,
-          interactive: false,
-          thickness: 2,
-          // showTrackOnHover: true,
-          // radius: Radius.circular(2),
-          child: SingleChildScrollView(
-            controller: scrollController,
-            scrollDirection: Axis.horizontal,
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: DataTable(
-                horizontalMargin: 0,
-                // columnSpacing: MediaQuery.of(context).size.width / (5.0 * 3),
-                columnSpacing: 5,
-                headingTextStyle: TextStyle(
-                    // leadingDistribution: TextLeadingDistribution.even,
-                    ),
-                // border: TableBorder.all(
-                //   color: Theme.of(context).primaryColor.withOpacity(0.5),
-                //   width: 1,
-                //   style: BorderStyle.solid,
-                // ),
-                columns: getColumns(context, columns),
-                rows: dataRowList,
-              ),
-            ),
-          ),
-        ),
-      ],
-    ),
-  );
-}
+//   return Container(
+//     // margin: EdgeInsets.symmetric(vertical: 10, horizontal: 0),
+//     child: Column(
+//       mainAxisAlignment: MainAxisAlignment.start,
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: [
+//         // SizedBox(
+//         //   height: 20,
+//         //   child: Center(
+//         //     child: Text(
+//         //       "Time Table",
+//         //       style: Theme.of(context).textTheme.titleLarge!.copyWith(
+//         //           color: Theme.of(context).appBarTheme.foregroundColor,
+//         //           fontWeight: FontWeight.bold),
+//         //     ),
+//         //   ),
+//         // ),
+//         // SizedBox(height: 10),
+//         // Divider(
+//         //   color: Theme.of(context).primaryColor.withOpacity(0.5),
+//         //   thickness: 0,
+//         //   indent: 40,
+//         //   endIndent: 40,
+//         // ),
+//         Scrollbar(
+//           controller: scrollController,
+//           thumbVisibility: false,
+//           interactive: false,
+//           thickness: 2,
+//           // showTrackOnHover: true,
+//           // radius: Radius.circular(2),
+//           child: SingleChildScrollView(
+//             controller: scrollController,
+//             scrollDirection: Axis.horizontal,
+//             child: Padding(
+//               padding: const EdgeInsets.only(bottom: 8.0),
+//               child: DataTable(
+//                 horizontalMargin: 0,
+//                 // columnSpacing: MediaQuery.of(context).size.width / (5.0 * 3),
+//                 columnSpacing: 5,
+//                 headingTextStyle: TextStyle(
+//                     // leadingDistribution: TextLeadingDistribution.even,
+//                     ),
+//                 // border: TableBorder.all(
+//                 //   color: Theme.of(context).primaryColor.withOpacity(0.5),
+//                 //   width: 1,
+//                 //   style: BorderStyle.solid,
+//                 // ),
+//                 columns: getColumns(context, columns),
+//                 rows: dataRowList,
+//               ),
+//             ),
+//           ),
+//         ),
+//       ],
+//     ),
+//   );
+// }

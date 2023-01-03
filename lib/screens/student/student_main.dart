@@ -23,7 +23,7 @@ class _StudentMainScreenState extends State<StudentMainScreen> {
     {'page': StudentHomeScreen(), 'title': 'Student Home'},
     {'page': StudentDownloadScreen(), 'title': 'Student Download'},
     {'page': StudentExamScreen(), 'title': 'Student Exam'},
-    {'page': StudentFeedbackScreen(), 'title': 'Student Feedback'},
+    // {'page': StudentFeedbackScreen(), 'title': 'Student Feedback'},
   ];
 
   int _selectedPage = 0;
@@ -67,6 +67,7 @@ class _StudentMainScreenState extends State<StudentMainScreen> {
             // tabBackgroundColor: Theme.of(context).bottomAppBarColor,
             textStyle: GoogleFonts.raleway(
               fontWeight: FontWeight.bold,
+              fontSize: 17,
               color: Colors.white,
             ),
             padding: EdgeInsets.all(10),
@@ -77,13 +78,13 @@ class _StudentMainScreenState extends State<StudentMainScreen> {
               ),
               GButton(
                 icon: Icons.download_outlined,
-                text: "Download",
+                text: "Downloads",
               ),
               GButton(
                 icon: Icons.school_outlined,
-                text: "Exam",
+                text: "Tests",
               ),
-              GButton(icon: Icons.wallet, text: "Feedback"),
+              // GButton(icon: Icons.wallet, text: "Feedback"),
             ],
           ),
         ),
