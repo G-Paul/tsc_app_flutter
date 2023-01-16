@@ -58,6 +58,7 @@ class _StudentMainScreenState extends State<StudentMainScreen> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
           child: GNav(
+
             onTabChange: (value) => _selectPage(value),
             gap: 10,
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
