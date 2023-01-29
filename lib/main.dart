@@ -12,6 +12,7 @@ import './app_themes.dart';
 import './screens/intro/intro_screen.dart';
 import 'screens/student/models/student_performance.dart';
 import './models/db/database.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 
 // void main() {
 //   runApp(MyApp());
@@ -19,6 +20,10 @@ import './models/db/database.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await FlutterDownloader.initialize(
+    debug: true,
+    ignoreSsl: true,
+  );
   await Firebase.initializeApp();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   final isLoggedIn = prefs.getBool('isLoggedIn') ?? false;

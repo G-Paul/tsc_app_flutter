@@ -39,7 +39,7 @@ class _StudentDownloadScreenState extends State<StudentDownloadScreen> {
     }
     print("sodfjlasdjflsdjlfjdsofjlkdsjfowejroijewoirjokwjfoijewf");
     print("${userClass}_${userCourse} ");
-    print(notes);
+    // print(notes);
     setState(() {
       _notes = notes;
     });
