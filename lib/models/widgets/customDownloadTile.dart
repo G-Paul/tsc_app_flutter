@@ -275,8 +275,8 @@ class _CustomDownloadTileState extends State<CustomDownloadTile> {
                         height: 5,
                       ),
                       (widget.subtitle != null)
-                          // ? Text(widget.fileName,
-                          ? Text(widget.fileName,
+                          ? Text(widget.subtitle!,
+                              // ? Text(widget.subtitle,
                               style: Theme.of(context)
                                   .textTheme
                                   .labelSmall!

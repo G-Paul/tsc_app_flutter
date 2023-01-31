@@ -83,7 +83,7 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return Container(
       child: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Container(
@@ -91,7 +91,69 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Container(height: 150),
+              Container(
+                // height: 120,
+
+                width: MediaQuery.of(context).size.width * 0.9,
+                margin: EdgeInsets.symmetric(vertical: 15),
+                padding: EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    // For neumorphism
+                    BoxShadow(
+                      color: (MediaQuery.of(context).platformBrightness ==
+                              Brightness.dark)
+                          ? Colors.black
+                          : Colors.black.withOpacity(0.3),
+                      offset: Offset(5, 5),
+                      blurRadius: 5,
+                      spreadRadius: 1,
+                    ),
+                    BoxShadow(
+                      color: (MediaQuery.of(context).platformBrightness ==
+                              Brightness.dark)
+                          ? Colors.white.withOpacity(0.2)
+                          : Colors.white,
+                      offset: Offset(-5, -5),
+                      blurRadius: 5,
+                      spreadRadius: 2,
+                    ),
+                  ],
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      "\"Develop success from failures. Discouragement and failure are two of the surest stepping stones to success.\"",
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.normal,
+                            fontSize: 18,
+                            color: Theme.of(context)
+                                .textTheme
+                                .bodySmall!
+                                .color!
+                                .withOpacity(0.8),
+                          ),
+                      textAlign: TextAlign.start,
+                      softWrap: true,
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      "--Dale Carnegie",
+                      textAlign: TextAlign.right,
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 18,
+                          ),
+                    )
+                  ],
+                ),
+              ),
               CustomListTile(
                 leadingIcon: Icons.calendar_month,
                 title: "Time Table",
