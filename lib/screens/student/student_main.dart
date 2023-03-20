@@ -4,6 +4,8 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 
 import '../navigation_drawer.dart';
 import '/models/db/database.dart';
+import '../login/login_button.dart';
+import '../../models/nav_menu/nav_menu_button.dart';
 
 //Screens:
 import './student_home.dart';
@@ -51,14 +53,16 @@ class _StudentMainScreenState extends State<StudentMainScreen> {
                 fontWeight: FontWeight.bold),
           ),
         ),
+        actions: [
+          NavMenuButton(),
+        ],
       ),
-      drawer: NavigationDrawer(),
+      // drawer: NavigationDrawer(),
       bottomNavigationBar: Container(
         color: Theme.of(context).scaffoldBackgroundColor,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
           child: GNav(
-
             onTabChange: (value) => _selectPage(value),
             gap: 10,
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
