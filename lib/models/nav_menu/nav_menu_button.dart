@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import './hero_dialog_route.dart';
 import './nav_menu.dart';
 import './custom_rect_tween.dart';
@@ -13,7 +14,7 @@ class NavMenuButton extends StatelessWidget {
       child: GestureDetector(
         onTap: (() {
           Navigator.of(context).push(HeroDialogRoute(builder: (context) {
-            return const NavMenu();
+            return NavMenu();
           }));
         }),
         child: Hero(
@@ -26,9 +27,12 @@ class NavMenuButton extends StatelessWidget {
             // elevation: 2,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            child: const Icon(
-              Icons.account_circle_outlined,
-              size: 32,
+            child: Center(
+              child: FaIcon(
+                FontAwesomeIcons.userGraduate,
+                color: Theme.of(context).focusColor,
+                size: 20,
+              ),
             ),
           ),
         ),
