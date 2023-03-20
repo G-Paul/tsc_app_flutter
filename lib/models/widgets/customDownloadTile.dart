@@ -1,13 +1,10 @@
-import 'dart:ffi';
 import 'dart:io';
 import 'dart:isolate';
 import 'dart:ui';
-import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:file_icon/file_icon.dart';
-import 'package:dio/dio.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 // import 'package:url_launcher/url_launcher.dart';
 // import 'package:url_launcher/url_launcher_string.dart';
 import 'package:open_file_plus/open_file_plus.dart';
@@ -253,7 +250,7 @@ class _CustomDownloadTileState extends State<CustomDownloadTile> {
               children: [
                 //icon
                 Container(
-                  child: FileIcon(widget.fileName, size: 30),
+                  child: specificFileIcon(widget.fileName),
                   // padding: EdgeInsets.all(0),
                 ),
                 SizedBox(
@@ -267,6 +264,8 @@ class _CustomDownloadTileState extends State<CustomDownloadTile> {
                     children: [
                       Text(
                         widget.title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.titleLarge!.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -277,6 +276,8 @@ class _CustomDownloadTileState extends State<CustomDownloadTile> {
                       (widget.subtitle != null)
                           ? Text(widget.subtitle!,
                               // ? Text(widget.subtitle,
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
                               style: Theme.of(context)
                                   .textTheme
                                   .labelSmall!
@@ -333,4 +334,27 @@ class _CustomDownloadTileState extends State<CustomDownloadTile> {
       ),
     );
   }
+}
+
+Widget specificFileIcon(String fileName) {
+  if (fileName.toLowerCase().endsWith('.pdf')) {
+    return FaIcon(FontAwesomeIcons.filePdf, color: Colors.red[400]);
+  } else if (fileName.toLowerCase().endsWith('.txt')) {
+    return FaIcon(FontAwesomeIcons.fileLines, color: Colors.cyan);
+  } else if (fileName.toLowerCase().endsWith('.pptx') ||
+      fileName.toLowerCase().endsWith('.ppt')) {
+    return FaIcon(FontAwesomeIcons.filePowerpoint, color: Colors.yellow[400]);
+  } else if (fileName.toLowerCase().endsWith('.docx') ||
+      fileName.toLowerCase().endsWith('.doc')) {
+    return const FaIcon(FontAwesomeIcons.fileWord, color: Colors.blue);
+  } else if (fileName.toLowerCase().endsWith('.xlsx') ||
+      fileName.toLowerCase().endsWith(
+            '.xls',
+          )) {
+    return const FaIcon(FontAwesomeIcons.fileExcel, color: Colors.green);
+  } else if (fileName.toLowerCase().endsWith('.png') ||
+      fileName.toLowerCase().endsWith('.jpg')) {
+    return const FaIcon(FontAwesomeIcons.fileImage, color: Colors.purple);
+  }
+  return const FaIcon(FontAwesomeIcons.file);
 }
