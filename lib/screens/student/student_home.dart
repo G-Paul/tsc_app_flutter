@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/rendering.dart';
-
-import '/models/db/database.dart';
 import '/models/widgets/customListTile.dart';
 import './models/student_time_table.dart';
 import './models/student_test.dart';
-// import './models/student_performance_table.dart';
 import 'models/student_performance.dart';
 
 class StudentHomeScreen extends StatefulWidget {
-  StudentHomeScreen({super.key});
+  final Map<String, dynamic> schedule;
+  final Map<String, dynamic> subjects;
+  final List<Map<String, dynamic>> upcomingTests;
+  final List<Map<String, String>> presentSubjectList;
+  final int userClass;
+  final String? userCourse;
+  StudentHomeScreen(
+      {super.key,
+      required this.userClass,
+      required this.userCourse,
+      required this.schedule,
+      required this.subjects,
+      required this.presentSubjectList,
+      required this.upcomingTests});
 
   @override
   State<StudentHomeScreen> createState() => _StudentHomeScreenState();
@@ -21,64 +29,11 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
   bool _expandTimeTable = false;
   bool _expandPerfTable = false;
   bool _expandTestTable = false;
-  Map<String, dynamic> schedule = {};
-  Map<String, dynamic> _subjects = {};
-  List<Map<String, dynamic>> _tests = [];
-  String? _userClass;
-  String? _userCourse;
 
-  Future<void> getStuff() async {
-    final String userCourse =
-        await db.collection('students').doc(user.uid).get().then((value) {
-      return value.data()!['course'];
-    });
-    final String userClass =
-        await db.collection('students').doc(user.uid).get().then((value) {
-      return value.data()!['class'].toString();
-    });
-    final docId = "${userCourse}_$userClass";
-    final sch = await UseDocument('schedule', docId).getDocument();
-    //subjects
-    final userSubjects =
-        await db.collection('students').doc(user.uid).get().then((value) {
-      return value.data()!['subjects'];
-    });
-    // print(userSubjects.toString());
-    List<Map<String, dynamic>> tests = [];
-    final testColl = db.collection('tests');
-    final testQuery = await testColl
-        .where('class', isEqualTo: int.parse(userClass))
-        .where('course', isEqualTo: userCourse)
-        .get()
-        .then(
-      (value) {
-        return value.docs;
-      },
-    );
-    for (var element in testQuery) {
-      final testDoc = await UseDocument('tests', element.id).getDocument();
-      if (!(DateTime.parse(testDoc['date']).isBefore(DateTime.now()))) {
-        tests.add(testDoc);
-      }
-    }
-    setState(() {
-      schedule = sch;
-      _userClass = userClass;
-      _userCourse = userCourse;
-      _subjects = userSubjects;
-      _tests = tests;
-    });
-  }
-
-  // Future<void> getTests() async {
-  //   var tests = [];
-  //   await GetCollection('tests', )
-  // }
-
+  
   @override
   void initState() {
     super.initState();
-    getStuff();
   }
 
   @override
@@ -93,7 +48,6 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
             children: [
               Container(
                 // height: 120,
-
                 width: MediaQuery.of(context).size.width * 0.9,
                 margin: EdgeInsets.symmetric(vertical: 15),
                 padding: EdgeInsets.all(20),
@@ -158,7 +112,11 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                 leadingIcon: Icons.calendar_month,
                 title: "Time Table",
                 context: context,
-                onTap: null,
+                onTap: () {
+                  setState(() {
+                    _expandTimeTable = !_expandTimeTable;
+                  });
+                },
                 onTapTrailing: () {
                   setState(() {
                     _expandTimeTable = !_expandTimeTable;
@@ -170,7 +128,7 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                     : Icon(Icons.expand_more,
                         color: Theme.of(context).focusColor),
                 child: StudentTimeTable(
-                  schedule: schedule,
+                  schedule: widget.schedule,
                   expanded: _expandTimeTable,
                 ),
               ),
@@ -178,7 +136,11 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                 leadingIcon: Icons.auto_graph_outlined,
                 title: "Performance",
                 context: context,
-                onTap: null,
+                onTap: () {
+                  setState(() {
+                    _expandPerfTable = !_expandPerfTable;
+                  });
+                },
                 onTapTrailing: () {
                   setState(() {
                     _expandPerfTable = !_expandPerfTable;
@@ -189,51 +151,49 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                         color: Theme.of(context).focusColor)
                     : Icon(Icons.expand_more,
                         color: Theme.of(context).focusColor),
-                child: (_userClass == null || _userCourse == null)
-                    ? Center(
-                        child: LinearProgressIndicator(
-                            backgroundColor: Color(0x7A9E9E9E),
-                            color: Theme.of(context).primaryColor))
-                    : Column(
+                child: Column(
+                  children: [
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Text("Class : $_userClass",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall!
-                                        .copyWith(
-                                            color: Theme.of(context)
-                                                .textTheme
-                                                .bodySmall!
-                                                .color!
-                                                .withOpacity(0.7))),
-                                Text("Course : $_userCourse",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall!
-                                        .copyWith(
-                                            color: Theme.of(context)
-                                                .textTheme
-                                                .bodySmall!
-                                                .color!
-                                                .withOpacity(0.7))),
-                              ]),
-                          (_expandPerfTable)
-                              ? SizedBox(height: 15)
-                              : SizedBox(
-                                  height: 0,
-                                  width: 0,
-                                ),
-                          (_expandPerfTable)
-                              ? StudentPerformace(subjects: _subjects)
-                              : SizedBox(
-                                  height: 0,
-                                  width: 0,
-                                ),
-                        ],
-                      ),
+                          Text("Class : ${widget.userClass}",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall!
+                                  .copyWith(
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall!
+                                          .color!
+                                          .withOpacity(0.7))),
+                          Text("Course : ${widget.userCourse}",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall!
+                                  .copyWith(
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall!
+                                          .color!
+                                          .withOpacity(0.7))),
+                        ]),
+                    (_expandPerfTable)
+                        ? SizedBox(height: 15)
+                        : SizedBox(
+                            height: 0,
+                            width: 0,
+                          ),
+                    (_expandPerfTable)
+                        ? StudentPerformace(
+                            subjects: widget.subjects,
+                            presentSubjectList: widget.presentSubjectList,
+                          )
+                        : SizedBox(
+                            height: 0,
+                            width: 0,
+                          ),
+                  ],
+                ),
               ),
               CustomListTile(
                 leadingIcon: Icons.checklist_rounded,
@@ -249,10 +209,14 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                     _expandTestTable = !_expandTestTable;
                   });
                 },
-                onTapTrailing: () {},
+                onTapTrailing: () {
+                  setState(() {
+                    _expandTestTable = !_expandTestTable;
+                  });
+                },
                 child: (_expandTestTable)
-                    ? StudentUpcomingTests(tests: _tests)
-                    : testText(_tests.length, context),
+                    ? StudentUpcomingTests(tests: widget.upcomingTests)
+                    : testText(widget.upcomingTests.length, context),
               ),
             ],
           ),

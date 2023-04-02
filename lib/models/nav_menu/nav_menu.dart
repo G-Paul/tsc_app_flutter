@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../db/database.dart';
 import './custom_rect_tween.dart';
+import '../widgets/customAlertDialog.dart';
 
 class NavMenu extends StatefulWidget {
   NavMenu({super.key});
@@ -96,16 +97,42 @@ class _NavMenuState extends State<NavMenu> {
                           context: context,
                           title: "Website",
                           icon: FontAwesomeIcons.rocket,
-                          ontap: () {}),
+                          ontap: () {
+                            showDialog(
+                                context: context,
+                                builder: ((context) {
+                                  return CustomAlertDialog(
+                                      title: "Go to Website",
+                                      content: "Go to an external website? ",
+                                      posText: "YES",
+                                      negText: "NO",
+                                      posAction: () {});
+                                }));
+                          }),
                       divider(),
                       customListTile(
                           context: context,
                           title: "Sign Out",
                           icon: FontAwesomeIcons.arrowRightFromBracket,
                           ontap: () {
-                            UserAuth().logout();
-                            Navigator.pushReplacementNamed(
-                                context, '/IntroScreen');
+                            showDialog(
+                                context: context,
+                                builder: ((context) {
+                                  return CustomAlertDialog(
+                                    title: "Sign-Out?",
+                                    content: "Are you sure?",
+                                    posText: "YES",
+                                    negText: "NO",
+                                    posAction: () {
+                                      UserAuth().logout();
+                                      Navigator.pushReplacementNamed(
+                                          context, '/IntroScreen');
+                                    },
+                                    // negAction: () {
+                                    //   Navigator.of(context).pop();
+                                    // },
+                                  );
+                                }));
                           }),
                       divider(),
                       customListTile(

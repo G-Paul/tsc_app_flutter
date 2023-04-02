@@ -6,9 +6,11 @@ import 'package:tsc_app/models/widgets/customDataTable.dart';
 
 class StudentPerformace extends StatefulWidget {
   final Map<String, dynamic> subjects;
+  final List<Map<String, String>> presentSubjectList;
   const StudentPerformace({
     super.key,
     required this.subjects,
+    required this.presentSubjectList,
   });
   // static const routeName = '/studentPerformance';
 
@@ -18,31 +20,31 @@ class StudentPerformace extends StatefulWidget {
 
 class _StudentPerformaceState extends State<StudentPerformace> {
   String _selectedSubject = 'default';
-  Map<String, dynamic> _subjects = {};
+  // Map<String, dynamic> _subjects = {};
   List<Map<String, dynamic>> _selectedData = [];
-  List<Map<String, String>> _presentSubjectList = [];
-  final _subjectList = [
-    {"value": 'default', "text": 'Select Subject'},
-    {"value": 'eng1', "text": 'English 1'},
-    {"value": 'eng2', "text": 'English 2'},
-    {"value": 'odia', "text": 'Odia'},
-    {"value": 'hindi', "text": 'Hindi'},
-    {"value": 'math', "text": 'Mathematics'},
-    {"value": 'comp', "text": 'Computers'},
-    {"value": 'sci', "text": 'Science'},
-    {"value": 'phys', "text": 'Physics'},
-    {"value": 'chem', "text": 'Chemistry'},
-    {"value": 'bio', "text": 'Biology'},
-    {"value": 'sst', "text": 'Social Science'},
-    {"value": 'hist', "text": 'History'},
-    {"value": 'geo', "text": 'Geography'}
-  ];
+  
+  // final _subjectList = [
+  //   {"value": 'default', "text": 'Select Subject'},
+  //   {"value": 'eng1', "text": 'English 1'},
+  //   {"value": 'eng2', "text": 'English 2'},
+  //   {"value": 'odia', "text": 'Odia'},
+  //   {"value": 'hindi', "text": 'Hindi'},
+  //   {"value": 'math', "text": 'Mathematics'},
+  //   {"value": 'comp', "text": 'Computers'},
+  //   {"value": 'sci', "text": 'Science'},
+  //   {"value": 'phys', "text": 'Physics'},
+  //   {"value": 'chem', "text": 'Chemistry'},
+  //   {"value": 'bio', "text": 'Biology'},
+  //   {"value": 'sst', "text": 'Social Science'},
+  //   {"value": 'hist', "text": 'History'},
+  //   {"value": 'geo', "text": 'Geography'}
+  // ];
   final columns = ["Topic", "Date", "Marks"];
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
 
   List<DropdownMenuItem<String>> get _subjectItems {
-    return _presentSubjectList.map((item) {
+    return widget.presentSubjectList.map((item) {
       return DropdownMenuItem<String>(
         value: item['value'],
         child: Text(item['text']!),
@@ -50,21 +52,21 @@ class _StudentPerformaceState extends State<StudentPerformace> {
     }).toList();
   }
 
-  void getPresentSubjectList(
-      Map<String, dynamic> subjects, List<Map<String, String>> subjectList) {
-    List<Map<String, String>> presentSubList = [
-      {"value": 'default', "text": 'Select Subject'}
-    ];
-    subjects.forEach((key, value) {
-      presentSubList.add(subjectList.firstWhere((element) {
-        return element['value'] == key;
-      }));
-    });
-    print(presentSubList.toString());
-    setState(() {
-      _presentSubjectList = presentSubList;
-    });
-  }
+  // void getPresentSubjectList(
+  //     Map<String, dynamic> subjects, List<Map<String, String>> subjectList) {
+  //   List<Map<String, String>> presentSubList = [
+  //     {"value": 'default', "text": 'Select Subject'}
+  //   ];
+  //   subjects.forEach((key, value) {
+  //     presentSubList.add(subjectList.firstWhere((element) {
+  //       return element['value'] == key;
+  //     }));
+  //   });
+  //   print(presentSubList.toString());
+  //   setState(() {
+  //     _presentSubjectList = presentSubList;
+  //   });
+  // }
 
   void getSelectedSubData(Map<String, dynamic> subjects, String subject) {
     List<Map<String, dynamic>> selectedSubData = [
@@ -98,10 +100,9 @@ class _StudentPerformaceState extends State<StudentPerformace> {
   Widget build(BuildContext context) {
     // final _args =
     //     ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-    setState(() {
-      _subjects = widget.subjects;
-    });
-    getPresentSubjectList(_subjects, _subjectList);
+    // setState(() {
+    //   _subjects = widget.subjects;
+    // });
     return Container(
       child: Column(
         children: [
@@ -152,7 +153,7 @@ class _StudentPerformaceState extends State<StudentPerformace> {
                 setState(() {
                   _selectedSubject = value!;
                 });
-                getSelectedSubData(_subjects, _selectedSubject);
+                getSelectedSubData(widget.subjects, _selectedSubject);
               },
             ),
           ),

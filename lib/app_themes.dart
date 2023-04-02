@@ -35,6 +35,12 @@ class LightThemes {
           fontSize: 16,
         ),
       ),
+      bodyMedium: GoogleFonts.raleway(
+        textStyle: TextStyle(
+          color: Colors.black, 
+          fontSize: 15, 
+        ),
+      ),
       titleSmall: GoogleFonts.raleway(
         textStyle: TextStyle(
           color: Color(0xFF00BF6D),
@@ -118,6 +124,12 @@ class DarkThemes {
       ),
       titleLarge: GoogleFonts.raleway(
         color: Colors.white,
+      ),
+      bodyMedium: GoogleFonts.raleway(
+        textStyle: TextStyle(
+          color: Colors.white, 
+          fontSize: 15, 
+        ),
       ),
       displayLarge: GoogleFonts.raleway(
         textStyle: TextStyle(

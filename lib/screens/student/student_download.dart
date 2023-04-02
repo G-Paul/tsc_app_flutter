@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:tsc_app/models/db/database.dart';
-import 'package:tsc_app/models/widgets/customListTile.dart';
 import 'package:tsc_app/models/widgets/customDownloadTile.dart';
 
 class StudentDownloadScreen extends StatefulWidget {
-  const StudentDownloadScreen({super.key});
+  final List<Map<String, String>> presentSubjectList;
+  final List<Map<String, dynamic>> notes;
+  const StudentDownloadScreen({super.key, required this.notes, required this.presentSubjectList});
 
   @override
   State<StudentDownloadScreen> createState() => _StudentDownloadScreenState();
@@ -12,111 +12,20 @@ class StudentDownloadScreen extends StatefulWidget {
 
 class _StudentDownloadScreenState extends State<StudentDownloadScreen> {
   bool isLoading = false;
-  List<Map<String, dynamic>> _notes = [];
   List<Map<String, dynamic>> _displayNotes = [];
   String _selectedSubject = 'default';
-  List<Map<String, String>> _presentSubjectList = [];
-  final _subjectList = [
-    {"value": 'default', "text": 'Select Subject'},
-    {"value": 'eng1', "text": 'English 1'},
-    {"value": 'eng2', "text": 'English 2'},
-    {"value": 'odia', "text": 'Odia'},
-    {"value": 'hindi', "text": 'Hindi'},
-    {"value": 'math', "text": 'Mathematics'},
-    {"value": 'comp', "text": 'Computers'},
-    {"value": 'sci', "text": 'Science'},
-    {"value": 'phys', "text": 'Physics'},
-    {"value": 'chem', "text": 'Chemistry'},
-    {"value": 'bio', "text": 'Biology'},
-    {"value": 'sst', "text": 'Social Science'},
-    {"value": 'hist', "text": 'History'},
-    {"value": 'geo', "text": 'Geography'}
-  ];
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  void getNotes() async {
-    setState(() {
-      isLoading = true;
-    });
-    final String userCourse =
-        await db.collection('students').doc(user.uid).get().then((value) {
-      return value.data()!['course'];
-    });
-    final String userClass =
-        await db.collection('students').doc(user.uid).get().then((value) {
-      return value.data()!['class'].toString();
-    });
-    List<Map<String, dynamic>> notes = [];
-    final notesColl = db.collection('notes');
-    final notesQuery = await notesColl
-        .where('class', isEqualTo: int.parse(userClass))
-        .where('course', isEqualTo: userCourse)
-        .get()
-        .then(
-      (value) {
-        return value.docs;
-      },
-    );
-    for (var element in notesQuery) {
-      final testDoc = await UseDocument('notes', element.id).getDocument();
-      notes.add(testDoc);
-      print(testDoc.toString());
-    }
-    List<Map<String, String>> presentList = [
-      {"value": 'default', "text": 'Select Subject'}
-    ];
-    notes.forEach((note) {
-      if (!presentList.any((subject) {
-        return subject['value'] == note['subject'];
-      })) {
-        presentList.add(_subjectList.firstWhere((element) {
-          return element['value'] == note['subject'];
-        }));
-      }
-    });
-    // print("sodfjlasdjflsdjlfjdsofjlkdsjfowejroijewoirjokwjfoijewf");
-    // print("${userClass}_${userCourse} ");
-    // print(notes);
-    setState(() {
-      _notes = notes;
-      _presentSubjectList = presentList;
-      isLoading = false;
-    });
-  }
-
   List<DropdownMenuItem<String>> get _subjectItems {
-    return _presentSubjectList.map((item) {
+    return widget.presentSubjectList.map((item) {
       return DropdownMenuItem<String>(
         value: item['value'],
         child: Text(item['text']!),
       );
     }).toList();
   }
-
-  void getPresentSubjectList(
-      Map<String, dynamic> subjects, List<Map<String, String>> subjectList) {
-    List<Map<String, String>> presentSubList = [
-      {"value": 'default', "text": 'Select Subject'}
-    ];
-    subjects.forEach((key, value) {
-      presentSubList.add(subjectList.firstWhere((element) {
-        return element['value'] == key;
-      }));
-    });
-    print(presentSubList.toString());
-    setState(() {
-      _presentSubjectList = presentSubList;
-    });
-  }
-
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    getNotes();
-    setState(() {
-      _presentSubjectList = _subjectList;
-    });
   }
 
   @override
@@ -136,7 +45,6 @@ class _StudentDownloadScreenState extends State<StudentDownloadScreen> {
           : Column(
               children: [
                 Container(
-                  // child: DropdownButtonFormField<String>(
                   margin: EdgeInsets.symmetric(vertical: 15),
                   padding: EdgeInsets.all(15),
                   // height: 60,
@@ -174,8 +82,9 @@ class _StudentDownloadScreenState extends State<StudentDownloadScreen> {
                       return validateList(value);
                     }),
                     onChanged: (value) {
+                      // displayNotes contains only the notes of the selected subject. 
                       List<Map<String, dynamic>> dList = [];
-                      _notes.forEach((note) {
+                      widget.notes.forEach((note) {
                         if (note['subject'] == value!) {
                           dList.add(note);
                         }
@@ -235,7 +144,7 @@ class _StudentDownloadScreenState extends State<StudentDownloadScreen> {
                         color: Theme.of(context).primaryColor.withOpacity(0.7),
                       ),
                 Expanded(
-                  child: ListView.builder(
+                  child: ListView.builder( 
                     itemCount: _displayNotes.length,
                     itemBuilder: (context, index) {
                       bool showDivider = true;
@@ -258,7 +167,6 @@ class _StudentDownloadScreenState extends State<StudentDownloadScreen> {
     );
   }
 }
-
 String? validateList(String? value) {
   if (value == null || value == 'default') {
     return 'Please select a subject';
