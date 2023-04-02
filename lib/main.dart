@@ -12,6 +12,7 @@ import './screens/intro/intro_screen.dart';
 import 'screens/student/models/student_performance.dart';
 import './models/db/database.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
+import './screens/menu/details.dart';
 
 // void main() {
 //   runApp(MyApp());
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
         '/IntroScreen': (context) => IntroScreen(),
         '/StudentMainScreen': (context) => StudentMainScreen(),
         // '/studentPerformance': (context) => StudentPerformace(),
+        '/Menu/Details':(context) => MenuDetailsScreen(),
       },
       home: (userAuth.isLoggedIn()) ? GetScreen(userType) : IntroScreen(),
     );

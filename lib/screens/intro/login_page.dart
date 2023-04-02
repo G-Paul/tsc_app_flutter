@@ -51,8 +51,8 @@ class _LoginPageState extends State<LoginPage> {
             prefs.setBool('isLoggedIn', true);
             switch (userTypeList[userType]) {
               case 'student':
-                Navigator.of(context)
-                    .pushReplacementNamed('/StudentMainScreen');
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    '/StudentMainScreen', ((route) => false));
                 break;
               default:
                 Navigator.of(context).pushReplacementNamed('/MainScreen');

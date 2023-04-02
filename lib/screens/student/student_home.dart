@@ -30,7 +30,6 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
   bool _expandPerfTable = false;
   bool _expandTestTable = false;
 
-  
   @override
   void initState() {
     super.initState();
@@ -65,15 +64,15 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                       blurRadius: 5,
                       spreadRadius: 1,
                     ),
-                    BoxShadow(
-                      color: (MediaQuery.of(context).platformBrightness ==
-                              Brightness.dark)
-                          ? Colors.white.withOpacity(0.2)
-                          : Colors.white,
-                      offset: Offset(-5, -5),
-                      blurRadius: 5,
-                      spreadRadius: 2,
-                    ),
+                    // BoxShadow(
+                    //   color: (MediaQuery.of(context).platformBrightness ==
+                    //           Brightness.dark)
+                    //       ? Colors.white.withOpacity(0.2)
+                    //       : Colors.white,
+                    //   offset: Offset(-5, -5),
+                    //   blurRadius: 5,
+                    //   spreadRadius: 2,
+                    // ),
                   ],
                 ),
                 child: Column(

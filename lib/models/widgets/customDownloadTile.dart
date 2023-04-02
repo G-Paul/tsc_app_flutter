@@ -251,7 +251,7 @@ class _CustomDownloadTileState extends State<CustomDownloadTile> {
                 //icon
                 Container(
                   child: specificFileIcon(widget.fileName),
-                  // padding: EdgeInsets.all(0),
+                  padding: EdgeInsets.symmetric(horizontal: 5),
                 ),
                 SizedBox(
                   width: 15,

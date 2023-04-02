@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../db/database.dart';
 import './custom_rect_tween.dart';
 import '../widgets/customAlertDialog.dart';
@@ -79,7 +80,9 @@ class _NavMenuState extends State<NavMenu> {
                           context: context,
                           title: "Details",
                           icon: FontAwesomeIcons.info,
-                          ontap: () {}),
+                          ontap: () {
+                            Navigator.of(context).pushNamed('/Menu/Details');
+                          }),
                       divider(),
                       customListTile(
                           context: context,
@@ -106,7 +109,15 @@ class _NavMenuState extends State<NavMenu> {
                                       content: "Go to an external website? ",
                                       posText: "YES",
                                       negText: "NO",
-                                      posAction: () {});
+                                      posAction: () async {
+                                        final Uri url = Uri.parse(
+                                            "https://talentsprintbam.com/");
+                                        if (!await launchUrl(url,
+                                            mode: LaunchMode
+                                                .externalApplication)) {
+                                          throw 'Could not launch $url';
+                                        }
+                                      });
                                 }));
                           }),
                       divider(),

@@ -4,7 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 class IntroPage4 extends StatelessWidget {
   final Function moveToLastPage;
   IntroPage4(this.moveToLastPage, {super.key});
-  final Uri url = Uri.parse("https://project-tsc.netlify.app");
+  final Uri url = Uri.parse("https://talentsprintbam.com/");
 
   Future<void> launch_Url() async {
     if (!await launchUrl(url)) {
