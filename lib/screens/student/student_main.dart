@@ -42,9 +42,11 @@ class _StudentMainScreenState extends State<StudentMainScreen> {
   List<Map<String, dynamic>> _previousTests = [];
   List<Map<String, String>> _presentSubjectsPerformance = [];
   List<Map<String, String>> _presentSubjectsDownloads = [];
+  List<Map<String, String>> _presentSubjectsTests = [];
   List<Map<String, dynamic>> _downloadNotes = [];
   late int _userClass;
   String? _userCourse;
+  String? _userName;
   int _mileStone = 0;
   bool _isLoading = true;
   bool _showContent = false;
@@ -66,6 +68,7 @@ class _StudentMainScreenState extends State<StudentMainScreen> {
     await db.collection('students').doc(user.uid).get().then((value) {
       setState(() {
         _userCourse = value.data()!['course'];
+        _userName = value.data()!['name'];
         _userClass = value.data()!['class'];
         _subjects = value.data()!['subjects'];
         _mileStone++;
@@ -112,9 +115,23 @@ class _StudentMainScreenState extends State<StudentMainScreen> {
         previousTests.add(testDoc);
       }
     }
+    //Make the list for previous test subjects
+    List<Map<String, String>> presentTestList = [
+      {"value": 'default', "text": 'Select Subject'}
+    ];
+    previousTests.forEach((test) {
+      if (!presentTestList.any((subject) {
+        return subject['value'] == test['subject'];
+      })) {
+        presentTestList.add(_subjectList.firstWhere((element) {
+          return element['value'] == test['subject'];
+        }));
+      }
+    });
     setState(() {
       _previousTests = previousTests;
       _upcomingTests = upcomingTests;
+      _presentSubjectsTests = presentTestList;
       _mileStone++;
     });
     //MILESTONE 5: Get the download notes list
@@ -173,14 +190,14 @@ class _StudentMainScreenState extends State<StudentMainScreen> {
               title: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text(
-                  "Hello, ${user.displayName}!",
+                  "Hello, ${_userName}!",
                   style: Theme.of(context).textTheme.titleLarge!.copyWith(
                       color: Theme.of(context).appBarTheme.foregroundColor,
                       fontWeight: FontWeight.bold),
                 ),
               ),
               actions: [
-                NavMenuButton(),
+                NavMenuButton(userClass: _userClass, userCourse: _userCourse!),
               ],
             )
           : null,
@@ -279,7 +296,11 @@ class _StudentMainScreenState extends State<StudentMainScreen> {
                       notes: _downloadNotes,
                       presentSubjectList: _presentSubjectsDownloads,
                     )
-                  : StudentExamScreen(),
+                  : StudentExamScreen(
+                      upcomingTests: _upcomingTests,
+                      previousTests: _previousTests,
+                      previousTestSubject: _presentSubjectsTests,
+                    ),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
     );
   }

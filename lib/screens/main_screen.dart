@@ -77,7 +77,7 @@ class _MainScreenState extends State<MainScreen> {
           LoginButton(),
         ],
       ),
-      drawer: NavigationDrawer(),
+      drawer: NavDrawer(),
       bottomNavigationBar: Container(
         color: Theme.of(context).backgroundColor,
         child: Padding(
@@ -88,7 +88,7 @@ class _MainScreenState extends State<MainScreen> {
             backgroundColor: Theme.of(context).backgroundColor,
             color: Theme.of(context).iconTheme.color!.withOpacity(0.9),
             activeColor: Theme.of(context).focusColor,
-            tabBackgroundColor: Theme.of(context).buttonColor,
+            tabBackgroundColor: Theme.of(context).indicatorColor,
             // tabBackgroundColor: Theme.of(context).bottomAppBarColor,
             textStyle: GoogleFonts.raleway(
               fontWeight: FontWeight.bold,

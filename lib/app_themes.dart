@@ -8,7 +8,9 @@ class LightThemes {
     // backgroundColor: const Color(0xFFFDFDF5),
     backgroundColor: Colors.white,
     scaffoldBackgroundColor: Color(0xFFF7F7EE),
+    disabledColor: Color.fromARGB(255, 170, 170, 170),
     buttonColor: Color(0xFF00BF6D),
+    indicatorColor: Color(0xFF00BF6D),
     iconTheme: const IconThemeData(
       color: const Color.fromARGB(255, 46, 49, 42),
     ),
@@ -31,7 +33,7 @@ class LightThemes {
     textTheme: TextTheme(
       bodySmall: GoogleFonts.raleway(
         textStyle: TextStyle(
-          color: Color.fromARGB(255, 39, 39, 39),
+          color: Color.fromARGB(255, 75, 75, 75),
           fontSize: 16,
         ),
       ),
@@ -82,6 +84,8 @@ class DarkThemes {
     backgroundColor: Color(0xFF151331),
     scaffoldBackgroundColor: Color(0xFF100F25),
     buttonColor: Color(0xFF00BF6D),
+    disabledColor: Color.fromARGB(255, 170, 170, 170),
+    indicatorColor: Color(0xFF00BF6D),
     focusColor: Colors.orange[400],
     iconTheme: const IconThemeData(
       color: Color(0xFF00BF6D),
@@ -103,7 +107,7 @@ class DarkThemes {
     textTheme: TextTheme(
       bodySmall: GoogleFonts.raleway(
         textStyle: TextStyle(
-          color: Color(0xFFFFFFFF),
+          color: Color.fromARGB(255, 206, 206, 206),
           fontSize: 15,
         ),
       ),

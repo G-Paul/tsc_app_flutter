@@ -56,7 +56,7 @@ class IntroPage4 extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(200, 50),
                   shape: StadiumBorder(),
-                  primary: Theme.of(context).buttonColor,
+                  primary: Theme.of(context).indicatorColor,
                 ),
                 onPressed: launch_Url,
                 child: SizedBox(
@@ -113,9 +113,9 @@ class IntroPage4 extends StatelessWidget {
                 style: OutlinedButton.styleFrom(
                   minimumSize: Size(200, 50),
                   shape: StadiumBorder(),
-                  primary: Theme.of(context).buttonColor,
+                  primary: Theme.of(context).indicatorColor,
                   side: BorderSide(
-                      width: 2, color: Theme.of(context).buttonColor),
+                      width: 2, color: Theme.of(context).indicatorColor),
                 ),
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.4,

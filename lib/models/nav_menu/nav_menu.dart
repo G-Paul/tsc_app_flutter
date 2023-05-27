@@ -7,7 +7,9 @@ import './custom_rect_tween.dart';
 import '../widgets/customAlertDialog.dart';
 
 class NavMenu extends StatefulWidget {
-  NavMenu({super.key});
+  final String userCourse;
+  final int userClass;
+  NavMenu({super.key, required this.userClass, required this.userCourse});
 
   @override
   State<NavMenu> createState() => _NavMenuState();
@@ -74,7 +76,10 @@ class _NavMenuState extends State<NavMenu> {
                                 'assets/images/talent_sprint_class_logo_transparent.png')),
                       ),
                       //Student details
-                      studentDetails(context, user!),
+                      studentDetails(
+                          context: context,
+                          userclass: widget.userClass,
+                          usercourse: widget.userCourse),
                       divider(),
                       customListTile(
                           context: context,
@@ -88,14 +93,16 @@ class _NavMenuState extends State<NavMenu> {
                           context: context,
                           title: "Fee Payment",
                           icon: FontAwesomeIcons.indianRupeeSign,
-                          ontap: () {}),
+                          ontap: () {
+                            Navigator.of(context).pushNamed('/Menu/Fees');
+                          }),
                       divider(),
-                      customListTile(
-                          context: context,
-                          title: "Settings",
-                          icon: FontAwesomeIcons.gears,
-                          ontap: () {}),
-                      divider(),
+                      // customListTile(
+                      //     context: context,
+                      //     title: "Settings",
+                      //     icon: FontAwesomeIcons.gears,
+                      //     ontap: () {}),
+                      // divider(),
                       customListTile(
                           context: context,
                           title: "Website",
@@ -136,8 +143,11 @@ class _NavMenuState extends State<NavMenu> {
                                     negText: "NO",
                                     posAction: () {
                                       UserAuth().logout();
-                                      Navigator.pushReplacementNamed(
-                                          context, '/IntroScreen');
+                                      Navigator.pushNamedAndRemoveUntil(
+                                        context,
+                                        '/IntroScreen',
+                                        (route) => false,
+                                      );
                                     },
                                     // negAction: () {
                                     //   Navigator.of(context).pop();
@@ -150,7 +160,9 @@ class _NavMenuState extends State<NavMenu> {
                           context: context,
                           title: "About",
                           icon: FontAwesomeIcons.code,
-                          ontap: () {}),
+                          ontap: () {
+                            Navigator.of(context).pushNamed('/Menu/About');
+                          }),
                       //menu list
 
                       // Text("Talent Sprint Classes",
@@ -178,12 +190,13 @@ class _NavMenuState extends State<NavMenu> {
   }
 }
 
-Widget studentDetails(BuildContext context, User user) {
+Widget studentDetails(
+    {required BuildContext context,
+    required String usercourse,
+    required int userclass}) {
   final box_width = MediaQuery.of(context).size.width * 0.9;
   final avatar_radius = box_width / 9;
   final padding = 20.0;
-  final userclass = 10;
-  final usercourse = "ICSE";
   return Padding(
     padding: EdgeInsets.all(padding),
     child: Row(

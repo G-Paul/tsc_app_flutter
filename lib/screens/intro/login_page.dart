@@ -262,7 +262,7 @@ class _LoginPageState extends State<LoginPage> {
                     style: ElevatedButton.styleFrom(
                       minimumSize: Size(200, 50),
                       shape: StadiumBorder(),
-                      primary: Theme.of(context).buttonColor,
+                      primary: Theme.of(context).indicatorColor,
                     ),
                     onPressed: (() {
                       firstTime = false;

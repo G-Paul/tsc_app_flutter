@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -13,6 +14,8 @@ import 'screens/student/models/student_performance.dart';
 import './models/db/database.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import './screens/menu/details.dart';
+import './screens/menu/fees.dart';
+import './screens/menu/about.dart';
 
 // void main() {
 //   runApp(MyApp());
@@ -20,6 +23,11 @@ import './screens/menu/details.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  //only portrait mode
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown
+  ]);
   await FlutterDownloader.initialize(
     debug: true,
     ignoreSsl: true,
@@ -52,6 +60,8 @@ class MyApp extends StatelessWidget {
         '/StudentMainScreen': (context) => StudentMainScreen(),
         // '/studentPerformance': (context) => StudentPerformace(),
         '/Menu/Details':(context) => MenuDetailsScreen(),
+        '/Menu/Fees': (context) => FeesScreen(),
+        '/Menu/About': (context) => AboutScreen(),
       },
       home: (userAuth.isLoggedIn()) ? GetScreen(userType) : IntroScreen(),
     );

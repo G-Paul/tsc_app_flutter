@@ -5,7 +5,9 @@ import './nav_menu.dart';
 import './custom_rect_tween.dart';
 
 class NavMenuButton extends StatelessWidget {
-  const NavMenuButton({super.key});
+  final String userCourse;
+  final int userClass;
+  const NavMenuButton({super.key, required this.userClass, required this.userCourse});
   final String _heroNavMenu = "hero-nav-menu";
   @override
   Widget build(BuildContext context) {
@@ -14,7 +16,7 @@ class NavMenuButton extends StatelessWidget {
       child: GestureDetector(
         onTap: (() {
           Navigator.of(context).push(HeroDialogRoute(builder: (context) {
-            return NavMenu();
+            return NavMenu(userClass: userClass, userCourse: userCourse,);
           }));
         }),
         child: Hero(

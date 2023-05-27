@@ -91,7 +91,7 @@ class _LoginCardState extends State<LoginCard> {
                         onPressed: () => signIn(),
                         style: ElevatedButton.styleFrom(
                           textStyle: GoogleFonts.raleway(),
-                          backgroundColor: Theme.of(context).buttonColor,
+                          backgroundColor: Theme.of(context).indicatorColor,
                           foregroundColor: Theme.of(context).focusColor,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(

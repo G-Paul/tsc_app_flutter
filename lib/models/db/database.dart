@@ -96,12 +96,16 @@ class UseDocument {
 }
 
 class UseStorage {
-  Future<String> uploadFile(String filePath, String fileName) async {
+  Future<Map<String, String>> uploadFile(String filePath, String fileName) async {
     return await storage
         .ref(filePath)
         .child(fileName)
         .putFile(File(filePath))
-        .then((value) => value.ref.getDownloadURL());
+        .then((value) async {
+          final fileURL = await value.ref.getDownloadURL();
+          final fullURL = value.ref.fullPath;
+          return {'fileURL': fileURL, 'fullURL': fullURL};
+        });
   }
 
   Future<void> deleteFile(String filePath, String fileName) async {

@@ -1,8 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import '/models/widgets/customListTile.dart';
 import './models/student_time_table.dart';
 import './models/student_test.dart';
 import 'models/student_performance.dart';
+import '../../models/dummy/dummy_quotes.dart';
 
 class StudentHomeScreen extends StatefulWidget {
   final Map<String, dynamic> schedule;
@@ -29,10 +32,18 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
   bool _expandTimeTable = false;
   bool _expandPerfTable = false;
   bool _expandTestTable = false;
+  String _currentQuote = "";
+  String _currentAuthor = "";
 
   @override
   void initState() {
     super.initState();
+    final random = Random();
+    final index = random.nextInt(dummyQuotes.length);
+    setState(() {
+      _currentQuote = dummyQuotes[index]["quote"]!;
+      _currentAuthor = dummyQuotes[index]["author"]!;
+    });
   }
 
   @override
@@ -80,11 +91,11 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      "\"Develop success from failures. Discouragement and failure are two of the surest stepping stones to success.\"",
+                      _currentQuote,
                       style: Theme.of(context).textTheme.bodySmall!.copyWith(
                             fontStyle: FontStyle.italic,
                             fontWeight: FontWeight.normal,
-                            fontSize: 18,
+                            fontSize: 16,
                             color: Theme.of(context)
                                 .textTheme
                                 .bodySmall!
@@ -96,12 +107,12 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                     ),
                     SizedBox(height: 10),
                     Text(
-                      "--Dale Carnegie",
+                      "--$_currentAuthor",
                       textAlign: TextAlign.right,
                       style: Theme.of(context).textTheme.bodySmall!.copyWith(
                             fontWeight: FontWeight.bold,
                             color: Theme.of(context).primaryColor,
-                            fontSize: 18,
+                            fontSize: 16,
                           ),
                     )
                   ],

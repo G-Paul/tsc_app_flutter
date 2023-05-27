@@ -98,7 +98,7 @@ class SignedInCard extends StatelessWidget {
                               ),
                             ),
                             style: ElevatedButton.styleFrom(
-                                backgroundColor: Theme.of(context).buttonColor,
+                                backgroundColor: Theme.of(context).indicatorColor,
                                 foregroundColor: Theme.of(context).focusColor,
                                 textStyle: GoogleFonts.raleway(),
                                 shape: RoundedRectangleBorder(
