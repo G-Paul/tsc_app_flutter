@@ -41,7 +41,7 @@ class _StudentExamScreenState extends State<StudentExamScreen> {
           // height: 60,
           width: MediaQuery.of(context).size.width * 0.9,
           decoration: BoxDecoration(
-            color: Theme.of(context).scaffoldBackgroundColor,
+            color: Theme.of(context).backgroundColor,
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
               // For neumorphism
@@ -54,15 +54,15 @@ class _StudentExamScreenState extends State<StudentExamScreen> {
                 blurRadius: 5,
                 spreadRadius: 1,
               ),
-              BoxShadow(
-                color: (MediaQuery.of(context).platformBrightness ==
-                        Brightness.dark)
-                    ? Colors.white.withOpacity(0.2)
-                    : Colors.white,
-                offset: Offset(-5, -5),
-                blurRadius: 5,
-                spreadRadius: 2,
-              ),
+              // BoxShadow(
+              //   color: (MediaQuery.of(context).platformBrightness ==
+              //           Brightness.dark)
+              //       ? Colors.white.withOpacity(0.2)
+              //       : Colors.white,
+              //   offset: Offset(-5, -5),
+              //   blurRadius: 5,
+              //   spreadRadius: 2,
+              // ),
             ],
           ),
           child: DropdownButtonFormField<String>(

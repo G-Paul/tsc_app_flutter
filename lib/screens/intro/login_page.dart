@@ -1,6 +1,7 @@
-import 'package:firebase_storage/firebase_storage.dart';
+// import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '/models/db/database.dart';
 
@@ -99,19 +100,27 @@ class _LoginPageState extends State<LoginPage> {
           backgroundColor:
               (userType == index) ? Theme.of(context).primaryColor : null,
           shape: const StadiumBorder(),
-          primary: Theme.of(context).primaryColor,
+          padding: EdgeInsets.symmetric(horizontal: 25),
+          foregroundColor: Theme.of(context).primaryColor,
           side: BorderSide(
             width: 1,
             color: Theme.of(context).primaryColor,
           )),
-      child: Text(
-        text,
-        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-              color: (index == userType)
-                  ? Colors.white
-                  : Theme.of(context).primaryColor,
-              fontSize: 12,
-            ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          
+          Text(
+            text,
+            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                  color: (index == userType)
+                      ? Colors.white
+                      : Theme.of(context).primaryColor,
+                  fontSize: 12,
+                ),
+          ),
+        ],
       ),
     );
   }
@@ -253,7 +262,7 @@ class _LoginPageState extends State<LoginPage> {
                       children: [
                         CustomRadioButton("Student", 0),
                         CustomRadioButton("Teacher", 1),
-                        CustomRadioButton("Admin", 2),
+                        // CustomRadioButton("Admin", 2),
                       ],
                     ),
                   ),

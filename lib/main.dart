@@ -70,8 +70,8 @@ class MyApp extends StatelessWidget {
 
 Widget GetScreen(String userType) {
   switch (userType) {
-    case 'admin':
-      return MainScreen();
+    // case 'admin':
+    //   return MainScreen();
     case 'student':
       return StudentMainScreen();
     case 'teacher':
