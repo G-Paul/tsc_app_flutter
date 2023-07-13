@@ -7,9 +7,10 @@ import './custom_rect_tween.dart';
 import '../widgets/customAlertDialog.dart';
 
 class NavMenu extends StatefulWidget {
-  final String userCourse;
-  final int userClass;
-  NavMenu({super.key, required this.userClass, required this.userCourse});
+  final String userType;
+  final String? userCourse;
+  final int? userClass;
+  NavMenu({super.key, required this.userType, this.userClass, this.userCourse});
 
   @override
   State<NavMenu> createState() => _NavMenuState();
@@ -76,27 +77,34 @@ class _NavMenuState extends State<NavMenu> {
                                 'assets/images/talent_sprint_class_logo_transparent.png')),
                       ),
                       //Student details
+                      (widget.userType == "Student")?
                       studentDetails(
                           context: context,
-                          userclass: widget.userClass,
-                          usercourse: widget.userCourse),
+                          userclass: widget.userClass!,
+                          usercourse: widget.userCourse!)
+                          : teacherDetails(context),
                       divider(),
                       customListTile(
                           context: context,
                           title: "Details",
                           icon: FontAwesomeIcons.info,
                           ontap: () {
-                            Navigator.of(context).pushNamed('/Menu/Details');
+                            if(widget.userType == "Student")
+                              Navigator.of(context).pushNamed('/Menu/Details');
+                            else
+                              Navigator.of(context).pushNamed('/Menu/Teachers/Details');
                           }),
                       divider(),
+                      widget.userType == "Student"?
                       customListTile(
                           context: context,
                           title: "Fee Payment",
                           icon: FontAwesomeIcons.indianRupeeSign,
                           ontap: () {
                             Navigator.of(context).pushNamed('/Menu/Fees');
-                          }),
-                      divider(),
+                          }):SizedBox(),
+                      widget.userType == "Student"?
+                      divider():SizedBox(),
                       // customListTile(
                       //     context: context,
                       //     title: "Settings",
@@ -233,6 +241,76 @@ Widget studentDetails(
                 // decoration: BoxDecoration(color: Colors.blue),
                 width: box_width - avatar_radius * 2 - padding * 3,
                 child: Text("Class $userclass \u30fb $usercourse",
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.titleSmall),
+              ),
+              // SizedBox(height: 5),
+              // Text(
+              //   "Click to Edit",
+              //   style: Theme.of(context).textTheme.titleLarge!.copyWith(
+              //       fontSize: 10,
+              //       color: Theme.of(context)
+              //           .textTheme
+              //           .titleLarge!
+              //           .color!
+              //           .withOpacity(0.5)),
+              // )
+            ],
+          ),
+        ),
+        // IconButton(
+        //   onPressed: () {},
+        //   icon: FaIcon(FontAwesomeIcons.penToSquare,
+        //       color: Theme.of(context).focusColor),
+        //   iconSize: 15,
+        // )
+      ],
+    ),
+  );
+}
+
+Widget teacherDetails(BuildContext context)
+{
+  final box_width = MediaQuery.of(context).size.width * 0.9;
+  final avatar_radius = box_width / 9;
+  final padding = 20.0;
+  return Padding(
+    padding: EdgeInsets.all(padding),
+    child: Row(
+      children: [
+        CircleAvatar(
+          backgroundColor: Theme.of(context).focusColor,
+          radius: avatar_radius,
+          child: CircleAvatar(
+            backgroundImage: AssetImage('assets/images/cristina_avatar.png'),
+            radius: avatar_radius - 4,
+          ),
+        ),
+        SizedBox(
+          width: padding,
+        ),
+        Container(
+          // height: avatar_radius * 2,
+          // decoration: BoxDecoration(color: Colors.blue),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                // decoration: BoxDecoration(color: Colors.orange),
+                width: box_width - avatar_radius * 2 - padding * 3,
+                child: Text(
+                  user.displayName!,
+                  style: Theme.of(context).textTheme.titleLarge,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              Container(
+                // decoration: BoxDecoration(color: Colors.blue),
+                width: box_width - avatar_radius * 2 - padding * 3,
+                child: Text("Teacher",
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.titleSmall),

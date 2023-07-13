@@ -2,24 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:tsc_app/screens/teacher/teacher_exam.dart';
+import 'package:tsc_app/screens/teacher/teacher_home.dart';
+import 'package:tsc_app/screens/teacher/teacher_upload.dart';
+
 
 import '/models/db/database.dart';
 import '../../models/nav_menu/nav_menu_button.dart';
 
-//Screens:
-import './student_home.dart';
-import './student_download.dart';
-import './student_exam.dart';
-
-class StudentMainScreen extends StatefulWidget {
-  const StudentMainScreen({super.key});
+class TeacherMainScreen extends StatefulWidget {
+  const TeacherMainScreen({super.key});
 
   @override
-  State<StudentMainScreen> createState() => _StudentMainScreenState();
+  State<TeacherMainScreen> createState() => _TeacherMainScreenState();
 }
 
-class _StudentMainScreenState extends State<StudentMainScreen> {
-  final _subjectList = [
+class _TeacherMainScreenState extends State<TeacherMainScreen> {
+
+    final _subjectList = [
     {"value": 'default', "text": 'Select Subject'},
     {"value": 'eng1', "text": 'English 1'},
     {"value": 'eng2', "text": 'English 2'},
@@ -58,151 +58,57 @@ class _StudentMainScreenState extends State<StudentMainScreen> {
     });
   }
 
-  //Database Stuff
   Future<void> getStuff() async {
     setState(() {
       _isLoading = true;
       _showContent = false;
     });
     //MILESTONE 1: Get student details from the student doc (class, course, subjects)
-    await db.collection('students').doc(user.uid).get().then((value) {
+    await db.collection('teachers').doc(user.uid).get().then((value) {
       setState(() {
-        _userCourse = value.data()!['course'];
         _userName = value.data()!['name'];
-        _userClass = value.data()!['class'];
-        _subjects = value.data()!['subjects'];
         _mileStone++;
       });
     });
-    //MILESTONE 2: Make the list of subjects for which the data is available
-    List<Map<String, String>> presentSubList = [
-      {"value": 'default', "text": 'Select Subject'}
-    ];
-    _subjects.forEach((key, value) {
-      presentSubList.add(_subjectList.firstWhere((element) {
-        return element['value'] == key;
-      }));
-    });
-    setState(() {
-      _presentSubjectsPerformance = presentSubList;
-      _mileStone++;
-    });
-    //MILESTONE 3: Get the Schedule for the current user
-    final docId = "${_userCourse}_$_userClass";
-    final schedule = await UseDocument('schedule', docId).getDocument();
-    setState(() {
-      _schedule = schedule;
-      _mileStone++;
-    });
-    //MILESTONE 4: Get the tests (upcoming and previous):
-    List<Map<String, dynamic>> upcomingTests = [];
-    List<Map<String, dynamic>> previousTests = [];
-    final testColl = db.collection('tests');
-    final testQuery = await testColl
-        .where('class', isEqualTo: _userClass)
-        .where('course', isEqualTo: _userCourse)
-        .get()
-        .then(
-      (value) {
-        return value.docs;
-      },
-    );
-    for (var element in testQuery) {
-      final testDoc = await UseDocument('tests', element.id).getDocument();
-      if (!(DateTime.parse(testDoc['date']).isBefore(DateTime.now()))) {
-        upcomingTests.add(testDoc);
-      } else {
-        previousTests.add(testDoc);
-      }
-    }
-    //Make the list for previous test subjects
-    List<Map<String, String>> presentTestList = [
-      {"value": 'default', "text": 'Select Subject'}
-    ];
-    previousTests.forEach((test) {
-      if (!presentTestList.any((subject) {
-        return subject['value'] == test['subject'];
-      })) {
-        presentTestList.add(_subjectList.firstWhere((element) {
-          return element['value'] == test['subject'];
-        }));
-      }
-    });
-    setState(() {
-      _previousTests = previousTests;
-      _upcomingTests = upcomingTests;
-      _presentSubjectsTests = presentTestList;
-      _mileStone++;
-    });
-    //MILESTONE 5: Get the download notes list
-    List<Map<String, dynamic>> notes = [];
-    final notesColl = db.collection('notes');
-    final notesQuery = await notesColl
-        .where('class', isEqualTo: _userClass)
-        .where('course', isEqualTo: _userCourse)
-        .get()
-        .then(
-      (value) {
-        return value.docs;
-      },
-    );
-    for (var element in notesQuery) {
-      final testDoc = await UseDocument('notes', element.id).getDocument();
-      notes.add(testDoc);
-      // print(testDoc.toString());
-    }
-    setState(() {
-      _downloadNotes = notes;
-      _mileStone++;
-    });
-    // MILESTONE 6: Make the subject list for downloads
-    List<Map<String, String>> presentList = [
-      {"value": 'default', "text": 'Select Subject'}
-    ];
-    _downloadNotes.forEach((note) {
-      if (!presentList.any((subject) {
-        return subject['value'] == note['subject'];
-      })) {
-        presentList.add(_subjectList.firstWhere((element) {
-          return element['value'] == note['subject'];
-        }));
-      }
-    });
+
+
     // Complete: Set loading to false
     setState(() {
-      _presentSubjectsDownloads = presentList;
+      // _presentSubjectsDownloads = presentList;
       _mileStone++;
       _isLoading = false;
+      _showContent = true; //---------------------need to change this later
     });
-  } //End of getStuff()
+  }
 
   @override
   void initState() {
-    getStuff();
     super.initState();
+    getStuff();
   }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: (_showContent)
           ? AppBar(
               backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
               title: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text(
-                  "Hello, ${_userName}!",
+                  "Hello, $_userName!",
                   style: Theme.of(context).textTheme.titleLarge!.copyWith(
                       color: Theme.of(context).appBarTheme.foregroundColor,
                       fontWeight: FontWeight.bold),
                 ),
               ),
               actions: [
-                NavMenuButton(userType: "Student", userClass: _userClass, userCourse: _userCourse!),
+                NavMenuButton(userType: "Teacher", userClass: null, userCourse: null),
               ],
             )
           : null,
-      // drawer: NavigationDrawer(),
       bottomNavigationBar: (_showContent)
           ? Container(
               color: Theme.of(context).scaffoldBackgroundColor,
@@ -229,19 +135,23 @@ class _StudentMainScreenState extends State<StudentMainScreen> {
                       text: "Home",
                     ),
                     GButton(
-                      icon: Icons.download_outlined,
-                      text: "Downloads",
+                      icon: Icons.upload_outlined,
+                      text: "Uploads",
                     ),
                     GButton(
                       icon: Icons.school_outlined,
                       text: "Tests",
                     ),
+                    // GButton(
+                    //   icon: Icons.check_box_outlined,
+                    //   text: "To Do",
+                    // ),
                     // GButton(icon: Icons.wallet, text: "Feedback"),
                   ],
                 ),
               ),
             )
-          : SizedBox(),
+            :SizedBox(),
       body: (!_showContent)
           ? Center(
               child: Column(
@@ -284,25 +194,10 @@ class _StudentMainScreenState extends State<StudentMainScreen> {
               ),
             )
           : (_selectedPage == 0)
-              ? StudentHomeScreen(
-                  userClass: _userClass,
-                  userCourse: _userCourse,
-                  schedule: _schedule,
-                  subjects: _subjects,
-                  upcomingTests: _upcomingTests,
-                  presentSubjectList: _presentSubjectsPerformance,
-                )
+              ? TeacherHomeScreen()
               : (_selectedPage == 1)
-                  ? StudentDownloadScreen(
-                      notes: _downloadNotes,
-                      presentSubjectList: _presentSubjectsDownloads,
-                    )
-                  : StudentExamScreen(
-                      upcomingTests: _upcomingTests,
-                      previousTests: _previousTests,
-                      previousTestSubject: _presentSubjectsTests,
-                    ),
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                  ? TeacherUploadScreen()
+                  : TeacherExamScreen(),
     );
   }
 }
